@@ -48,9 +48,4 @@ interface Communications {
             Post<ResultUI>()
     }
 
-    interface SubcategoryListCommunication : Mutable<List<SubcategoryUI>> {
-        class Base : SubcategoryListCommunication,
-            Post<List<SubcategoryUI>>()
-    }
-
 }
