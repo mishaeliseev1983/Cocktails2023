@@ -1,13 +1,14 @@
-package com.melyseev.cocktails2023
+package com.melyseev.cocktails2023.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.domain.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.ResultSubcategory
 import com.melyseev.cocktails2023.domain.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
-import com.melyseev.cocktails2023.presentation.ResultUI
 import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 
 abstract class BaseTestCocktailsListViewModel {
 
@@ -17,7 +18,6 @@ abstract class BaseTestCocktailsListViewModel {
 
 
         val listShowProgress = mutableListOf<Int>()
-        val listShowList = mutableListOf<SubcategoryUI>()
         val listShowState = mutableListOf<ResultUI>()
 
         override fun showProgress(value: Int) {
@@ -28,10 +28,6 @@ abstract class BaseTestCocktailsListViewModel {
             listShowState.add(state)
         }
 
-        override fun showList(list: List<SubcategoryUI>) {
-            listShowList.clear()
-            listShowList.addAll(list)
-        }
 
         override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
             TODO("Not yet implemented")
@@ -41,9 +37,6 @@ abstract class BaseTestCocktailsListViewModel {
             TODO("Not yet implemented")
         }
 
-        override fun observeList(owner: LifecycleOwner, observer: Observer<List<SubcategoryUI>>) {
-            TODO("Not yet implemented")
-        }
 
     }
 
@@ -52,17 +45,36 @@ abstract class BaseTestCocktailsListViewModel {
 
 
         val list = mutableListOf<SubcategoryDomain>()
-        override fun fetchListSubcategory(category: String): ResultSubcategory {
-            return ResultSubcategory.Success(list)
+        val messageError = "no connection"
+        lateinit var resultSubcategory: ResultSubcategory
+
+        override suspend fun fetchListSubcategory(category: String): ResultSubcategory {
+            return resultSubcategory
         }
 
-        fun changeExpectedResult(newList: List<SubcategoryDomain>){
+
+        fun changeExpectedResultSubcategory(newResult: ResultSubcategory){
+            resultSubcategory = newResult
+        }
+
+        fun changeExpectedList(newList: List<SubcategoryDomain>){
             list.clear()
             list.addAll(newList)
         }
 
     }
 
+
+    class TestDisptachersList: DispatchersList {
+        override fun io(): CoroutineDispatcher {
+            return TestCoroutineDispatcher()
+        }
+
+        override fun ui(): CoroutineDispatcher {
+            return StandardTestDispatcher()
+        }
+
+    }
 
 
 }

@@ -1,23 +1,18 @@
 package com.melyseev.cocktails2023.domain
 
 interface CocktailsInteractor {
-    fun fetchListSubcategory(category: String): ResultSubcategory
+    suspend fun fetchListSubcategory(category: String): ResultSubcategory
     //fun fetchListCocktail(subcategory: String): List<SubcategoryDomain>
 
-    fun <T> mapToUI(mapper: Mapper<T>): T
 
-    interface Mapper<T>{
-        fun map(value: ResultSubcategory) : T
-    }
-    class Base: CocktailsInteractor{
-        override fun fetchListSubcategory(category: String): ResultSubcategory {
-            return ResultSubcategory.Success(emptyList())
+    class Base(private val repository: CocktailsRepository, private val handleDomainExceptionToString: HandleDomainExceptionToString): CocktailsInteractor{
+        override suspend fun fetchListSubcategory(category: String): ResultSubcategory {
+            return try {
+                val list = repository.fetchListSubcategory(category)
+                ResultSubcategory.Success(list)
+            } catch (e: DomainException){
+                ResultSubcategory.Error(handleDomainExceptionToString.handleError(e))
+            }
         }
-
-        override fun <T> mapToUI(mapper: Mapper<T>): T {
-            return mapper.map()
-        }
-
-
     }
 }

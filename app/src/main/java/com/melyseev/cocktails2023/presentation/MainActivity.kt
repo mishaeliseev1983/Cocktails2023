@@ -11,10 +11,8 @@ class MainActivity : AppCompatActivity() {
 
 
         if (savedInstanceState == null) {
-            val enterNumberFragment = CocktailsListFragment.newInstance()
-                supportFragmentManager.beginTransaction()
-                .add(R.id.container, enterNumberFragment)
-                .commit()
+            val cocktailsListFragment= CocktailsListFragment.newInstance()
+            supportFragmentManager.beginTransaction().add(R.id.container, cocktailsListFragment).commit()
         }
 
     }

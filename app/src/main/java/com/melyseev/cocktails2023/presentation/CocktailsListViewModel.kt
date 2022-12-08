@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melyseev.cocktails2023.domain.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.ResultSubcategory
+import com.melyseev.cocktails2023.domain.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
 import kotlinx.coroutines.launch
 
 class CocktailsListViewModel(
+    private val dispatchersList: DispatchersList,
     private val communications: SubcategoryCommunications,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
@@ -18,24 +20,27 @@ class CocktailsListViewModel(
 
     fun init() {
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchersList.io()) {
             communications.showProgress(View.VISIBLE)
 
             val result = interactor.fetchListSubcategory("")
-            //from resultSub to resultUI
-            //communications.showState(result)
-            result.
+            val resultUI = result.map(object : ResultSubcategory.Mapper<ResultUI>{
+                override fun mapToUi(
+                    listSubcategoryDomain: List<SubcategoryDomain>,
+                    message: String
+                ): ResultUI =
+                    if(message.isEmpty()){
+                        val listSubcategoryUI= listSubcategoryDomain.map {
+                            SubcategoryUI(title = it.title, isSelected = it.isSelected)
+                        }
+                        ResultUI.Success(listSubcategoryUI)
+                    }else{
+                        ResultUI.Failure(message = message)
+                    }
 
-            when (result){
-
-                is ResultSubcategory.Success -> {
-                    //from SubcategoryDomain -> SubcategoryUI
-                    communications.showList(result.listSubcategory)
-                }
-                is ResultSubcategory.Error -> communications.showState(ResultUI.Failure(result.message))
-            }
-
+            })
             communications.showProgress(View.GONE)
+            communications.showState(resultUI)
         }
     }
 
@@ -47,7 +52,4 @@ class CocktailsListViewModel(
         communications.observeState(owner, observer)
     }
 
-    override fun observeList(owner: LifecycleOwner, observer: Observer<List<SubcategoryUI>>) {
-        communications.observeList(owner, observer)
-    }
 }
