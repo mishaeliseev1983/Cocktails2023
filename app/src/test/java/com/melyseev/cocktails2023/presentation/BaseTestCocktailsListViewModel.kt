@@ -15,8 +15,6 @@ abstract class BaseTestCocktailsListViewModel {
 
     class TestSubcategoryCommunications: SubcategoryCommunications{
 
-
-
         val listShowProgress = mutableListOf<Int>()
         val listShowState = mutableListOf<ResultUI>()
 
@@ -43,7 +41,6 @@ abstract class BaseTestCocktailsListViewModel {
 
     class TestCocktailsInteractor: CocktailsInteractor {
 
-
         val list = mutableListOf<SubcategoryDomain>()
         val messageError = "no connection"
         lateinit var resultSubcategory: ResultSubcategory
@@ -52,6 +49,9 @@ abstract class BaseTestCocktailsListViewModel {
             return resultSubcategory
         }
 
+        override suspend fun fetchListCocktail(subcategory: String): List<SubcategoryDomain> {
+            TODO("Not yet implemented")
+        }
 
         fun changeExpectedResultSubcategory(newResult: ResultSubcategory){
             resultSubcategory = newResult
@@ -61,9 +61,7 @@ abstract class BaseTestCocktailsListViewModel {
             list.clear()
             list.addAll(newList)
         }
-
     }
-
 
     class TestDisptachersList: DispatchersList {
         override fun io(): CoroutineDispatcher {
@@ -73,8 +71,6 @@ abstract class BaseTestCocktailsListViewModel {
         override fun ui(): CoroutineDispatcher {
             return StandardTestDispatcher()
         }
-
     }
-
 
 }

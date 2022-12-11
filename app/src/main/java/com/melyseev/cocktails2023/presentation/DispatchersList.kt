@@ -2,12 +2,13 @@ package com.melyseev.cocktails2023.presentation
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 interface DispatchersList {
     fun io(): CoroutineDispatcher
     fun ui(): CoroutineDispatcher
 
-    class Base: DispatchersList {
+    class Base @Inject constructor() : DispatchersList {
         override fun io(): CoroutineDispatcher {
             return Dispatchers.IO
         }

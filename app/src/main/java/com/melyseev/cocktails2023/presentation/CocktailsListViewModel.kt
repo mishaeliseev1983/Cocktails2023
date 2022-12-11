@@ -10,31 +10,32 @@ import com.melyseev.cocktails2023.domain.ResultSubcategory
 import com.melyseev.cocktails2023.domain.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CocktailsListViewModel(
+class CocktailsListViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
     private val communications: SubcategoryCommunications,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
-    ObserveSubcategory {
+    ObserveSubcategory, FetchList {
 
-    fun init() {
+    override fun fetchListSubcategory() {
 
         viewModelScope.launch(dispatchersList.io()) {
             communications.showProgress(View.VISIBLE)
 
-            val result = interactor.fetchListSubcategory("")
-            val resultUI = result.map(object : ResultSubcategory.Mapper<ResultUI>{
+            val result = interactor.fetchListSubcategory(CATEGORY)
+            val resultUI = result.map(object : ResultSubcategory.Mapper<ResultUI> {
                 override fun mapToUi(
                     listSubcategoryDomain: List<SubcategoryDomain>,
                     message: String
                 ): ResultUI =
-                    if(message.isEmpty()){
-                        val listSubcategoryUI= listSubcategoryDomain.map {
-                            SubcategoryUI(title = it.title, isSelected = it.isSelected)
+                    if (message.isEmpty()) {
+                        val listSubcategoryUI = listSubcategoryDomain.map {
+                            SubcategoryUI(title = it.title, isSelected = (it.title == SUBCATEGORY))
                         }
                         ResultUI.Success(listSubcategoryUI)
-                    }else{
+                    } else {
                         ResultUI.Failure(message = message)
                     }
 
@@ -44,12 +45,31 @@ class CocktailsListViewModel(
         }
     }
 
+    override fun fetchListCocktails() {
+        viewModelScope.launch(dispatchersList.io()) {
+            communications.showProgress(View.VISIBLE)
+
+            //SUBCATEGORY
+            //get cocktails
+            //val result = interactor.fetchListSubcategory(SUBCATEGORY)
+
+            communications.showProgress(View.GONE)
+        }
+    }
+
+
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
         communications.observeProgress(owner, observer)
     }
 
     override fun observeState(owner: LifecycleOwner, observer: Observer<ResultUI>) {
         communications.observeState(owner, observer)
+    }
+
+
+    companion object {
+        var CATEGORY = "Non alcoholic"
+        var SUBCATEGORY = "11"
     }
 
 }

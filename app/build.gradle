@@ -1,11 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
     namespace 'com.melyseev.cocktails2023'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.melyseev.cocktails2023"
@@ -48,10 +49,13 @@ dependencies {
     //test coroutines
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
-
     // Fragment / viewmodel
     def lifecycle = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle}"
     implementation "androidx.fragment:fragment-ktx:1.5.4"
+
+    //dagger
+    implementation 'com.google.dagger:dagger:2.44'
+    kapt 'com.google.dagger:dagger-compiler:2.44'
 }
