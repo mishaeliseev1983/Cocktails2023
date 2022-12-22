@@ -3,12 +3,12 @@ package com.melyseev.cocktails2023.presentation.communications
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.presentation.ObserveSubcategory
-import com.melyseev.cocktails2023.presentation.ResultUI
+import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import javax.inject.Inject
 
 interface SubcategoryCommunications : ObserveSubcategory {
     fun showProgress(value: Int)
-    fun showState(state: ResultUI)
+    fun showState(state: SubcategoryResultUI)
 
 
     class Base @Inject constructor(
@@ -19,7 +19,7 @@ interface SubcategoryCommunications : ObserveSubcategory {
             progress.change(value)
         }
 
-        override fun showState(value: ResultUI) {
+        override fun showState(value: SubcategoryResultUI) {
             state.change(value)
         }
 
@@ -27,7 +27,7 @@ interface SubcategoryCommunications : ObserveSubcategory {
             progress.observe(owner, observer)
         }
 
-        override fun observeState(owner: LifecycleOwner, observer: Observer<ResultUI>) {
+        override fun observeState(owner: LifecycleOwner, observer: Observer<SubcategoryResultUI>) {
             state.observe(owner, observer)
         }
 

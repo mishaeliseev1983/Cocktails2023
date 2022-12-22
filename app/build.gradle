@@ -58,4 +58,14 @@ dependencies {
     //dagger
     implementation 'com.google.dagger:dagger:2.44'
     kapt 'com.google.dagger:dagger-compiler:2.44'
+
+
+    //Retrofit dependencies
+    def retrofit = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+
+
+    implementation "androidx.cardview:cardview:1.0.0"
 }

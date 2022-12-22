@@ -1,7 +1,7 @@
-package com.melyseev.cocktails2023.domain
+package com.melyseev.cocktails2023.domain.subcategories
 
 sealed class ResultSubcategory {
-    abstract fun <T> map(mapper: Mapper<T> ): T
+    abstract fun <T> map(mapper: Mapper<T>): T
     interface  Mapper<T> {
         fun mapToUi(listSubcategoryDomain: List<SubcategoryDomain>, message: String): T
     }

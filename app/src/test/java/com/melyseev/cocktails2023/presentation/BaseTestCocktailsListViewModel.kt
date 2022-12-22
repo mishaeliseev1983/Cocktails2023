@@ -3,9 +3,11 @@ package com.melyseev.cocktails2023.presentation
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.domain.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.ResultSubcategory
-import com.melyseev.cocktails2023.domain.SubcategoryDomain
+import com.melyseev.cocktails2023.domain.cocktails.ResultCocktail
+import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
+import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -16,13 +18,13 @@ abstract class BaseTestCocktailsListViewModel {
     class TestSubcategoryCommunications: SubcategoryCommunications{
 
         val listShowProgress = mutableListOf<Int>()
-        val listShowState = mutableListOf<ResultUI>()
+        val listShowState = mutableListOf<SubcategoryResultUI>()
 
         override fun showProgress(value: Int) {
             listShowProgress.add(value)
         }
 
-        override fun showState(state: ResultUI) {
+        override fun showState(state: SubcategoryResultUI) {
             listShowState.add(state)
         }
 
@@ -31,7 +33,7 @@ abstract class BaseTestCocktailsListViewModel {
             TODO("Not yet implemented")
         }
 
-        override fun observeState(owner: LifecycleOwner, observer: Observer<ResultUI>) {
+        override fun observeState(owner: LifecycleOwner, observer: Observer<SubcategoryResultUI>) {
             TODO("Not yet implemented")
         }
 
@@ -49,7 +51,10 @@ abstract class BaseTestCocktailsListViewModel {
             return resultSubcategory
         }
 
-        override suspend fun fetchListCocktail(subcategory: String): List<SubcategoryDomain> {
+        override suspend fun fetchListCocktails(
+            category: String,
+            subcategory: String
+        ): ResultCocktail {
             TODO("Not yet implemented")
         }
 

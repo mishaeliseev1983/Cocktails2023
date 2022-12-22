@@ -1,7 +1,9 @@
 package com.melyseev.cocktails2023.presentation
 
-import com.melyseev.cocktails2023.domain.ResultSubcategory
-import com.melyseev.cocktails2023.domain.SubcategoryDomain
+import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryUI
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,15 +36,16 @@ class TestCocktailListViewModel {
         interactor.changeExpectedResultSubcategory(ResultSubcategory.Success(listExpected))
 
         //action
-        viewModel.init()
+        viewModel.fetchListSubcategory()
 
         //check
         assertEquals(2, communications.listShowProgress.size)
         assertEquals(1, communications.listShowState.size)
         assertEquals(
-            ResultUI.Success(listOf( SubcategoryUI("12"),
+            SubcategoryResultUI.Success(listOf( SubcategoryUI("12"),
                     SubcategoryUI("13"),
-                    SubcategoryUI("14"))), communications.listShowState[0])
+                    SubcategoryUI("14")
+            )), communications.listShowState[0])
 }
 
 
@@ -54,13 +57,13 @@ class TestCocktailListViewModel {
         interactor.changeExpectedResultSubcategory(ResultSubcategory.Error(errorMessage))
 
         //action
-        viewModel.init()
+        viewModel.fetchListSubcategory()
 
         //check
         assertEquals(2, communications.listShowProgress.size)
         assertEquals(1, communications.listShowState.size)
         assertEquals(
-            ResultUI.Failure(errorMessage), communications.listShowState[0])
+            SubcategoryResultUI.Failure(errorMessage), communications.listShowState[0])
     }
 
 

@@ -3,8 +3,7 @@ package com.melyseev.cocktails2023.presentation.communications
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
-import com.melyseev.cocktails2023.presentation.ResultUI
+import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import javax.inject.Inject
 
 interface Communications {
@@ -14,6 +13,7 @@ interface Communications {
     }
 
    // interface Change<S> : Mapper<Unit, S>
+   // interface Mutable<T> : Observe<T>, Change<T>
 
     interface Change<Unit,S> {
         fun change(source: S) : Unit
@@ -23,7 +23,7 @@ interface Communications {
         fun observe(owner: LifecycleOwner, observer: Observer<T>)
     }
 
-   // interface Mutable<T> : Observe<T>, Change<T>
+
 
     interface Mutable<T> : Observe<T>, Change<Unit, T>
 
@@ -41,7 +41,9 @@ interface Communications {
 */
     abstract class Post<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
         override fun change(source: T) {
-            liveData.postValue(source)
+            source.let {
+                liveData.postValue(it)
+            }
         }
     }
 
@@ -50,9 +52,9 @@ interface Communications {
         class Base @Inject constructor(): ProgressCommunication, Post<Int>()
     }
 
-    interface SubcategoryStateCommunication : Mutable<ResultUI> {
+    interface SubcategoryStateCommunication : Mutable<SubcategoryResultUI> {
         class Base  @Inject constructor():  SubcategoryStateCommunication,
-            Post<ResultUI>()
+            Post<SubcategoryResultUI>()
     }
 
 }

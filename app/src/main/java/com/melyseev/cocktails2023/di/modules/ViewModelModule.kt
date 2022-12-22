@@ -13,5 +13,5 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(CocktailsListViewModel::class)
     @Binds
-    fun bindEnterNumberViewModel(impl: CocktailsListViewModel): ViewModel
+    fun bindCocktailsListViewModel(impl: CocktailsListViewModel): ViewModel
 }

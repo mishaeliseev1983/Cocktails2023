@@ -1,5 +1,8 @@
 package com.melyseev.cocktails2023.domain
 
+import com.melyseev.cocktails2023.domain.cocktails.CocktailDomain
+import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -72,6 +75,13 @@ class TestCocktailsInteractor {
             if (expectError)
                 throw expectDomainError
             return expectListSubcategoryDomain
+        }
+
+        override suspend fun fetchListCocktails(
+            category: String,
+            subcategory: String
+        ): List<CocktailDomain> {
+            TODO("Not yet implemented")
         }
 
     }
