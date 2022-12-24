@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melyseev.cocktails2023.databinding.FragmentCocktailsListBinding
+import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailResultUI
+import com.melyseev.cocktails2023.presentation.list_cocktails.recyclerview.CocktailsListAdapter
 import com.melyseev.cocktails2023.presentation.list_subcategories.recyclerview.SubcategoryListAdapter
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.recyclerview.SubcategoryUIClick
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CocktailsListFragment : Fragment() {
@@ -45,9 +48,17 @@ class CocktailsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         daggerApplicationComponent.inject( this )
+        binding.tvCategory.text = CocktailsListViewModel.CATEGORY
+
+
         val subcategoryUIClick = object : SubcategoryUIClick {
             override fun click(subcategoryUI: SubcategoryUI) {
+
+                println("qwer ${CocktailsListViewModel.CATEGORY}")
+                binding.tvCategory.text = CocktailsListViewModel.CATEGORY
                 CocktailsListViewModel.SUBCATEGORY = subcategoryUI.title
+
+                viewModel.fetchListSubcategory()
                 viewModel.fetchListCocktails()
             }
         }
@@ -55,28 +66,44 @@ class CocktailsListFragment : Fragment() {
         binding.recyclerViewSubcategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewSubcategory.adapter = subcategoryListAdapter
-        binding.tvCategory.text = "Non alcoholic"
+
+
+
+        val cocktailListAdapter = CocktailsListAdapter()
+        binding.recyclerViewCocktails.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewCocktails.adapter = cocktailListAdapter
 
         viewModel.observeProgress(this) {
             binding.progress.visibility = it
         }
 
-        viewModel.observeState(this) {
+
+        viewModel.observeStateSubcategoryList(this) {
+
             when (it) {
                 is SubcategoryResultUI.Success -> {
                     subcategoryListAdapter.change( it.list )
-                    val selectedCategory = it.list.find { it.isSelected }
-                    selectedCategory?.let {
-                        CocktailsListViewModel.SUBCATEGORY = it.title
-                        viewModel.fetchListCocktails()
-                    }
                 }
                 is SubcategoryResultUI.Failure -> {
                     binding.tvCategory.text = it.message
                 }
             }
         }
+
+        viewModel.observeStateCocktailList(this) {
+            when (it) {
+                is CocktailResultUI.Success -> {
+                    cocktailListAdapter.change( it.list )
+                }
+                is CocktailResultUI.Failure -> {
+                    binding.tvCategory.text = it.message
+                }
+            }
+        }
+
         viewModel.fetchListSubcategory()
+        viewModel.fetchListCocktails()
     }
 
     override fun onDestroy() {

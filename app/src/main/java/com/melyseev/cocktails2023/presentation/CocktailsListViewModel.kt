@@ -5,21 +5,29 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.melyseev.cocktails2023.data.common.CATEGORY_DEFAULT
+import com.melyseev.cocktails2023.data.common.SUBCATEGORY_DEFAULT
 import com.melyseev.cocktails2023.domain.CocktailsInteractor
+import com.melyseev.cocktails2023.domain.cocktails.CocktailDomain
+import com.melyseev.cocktails2023.domain.cocktails.ResultCocktail
 import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
+import com.melyseev.cocktails2023.presentation.communications.CocktailsCommunications
+import com.melyseev.cocktails2023.presentation.communications.ObserveCocktails
+import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailResultUI
+import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryUI
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CocktailsListViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
-    private val communications: SubcategoryCommunications,
+    private val communications: CocktailsCommunications,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
-    ObserveSubcategory, FetchList {
+    ObserveCocktails, FetchList {
 
     override fun fetchListSubcategory() {
 
@@ -43,7 +51,7 @@ class CocktailsListViewModel @Inject constructor(
             })
 
             communications.showProgress(View.GONE)
-            communications.showState(resultUI)
+            communications.showSubcategoryListState(state = resultUI)
         }
     }
 
@@ -54,6 +62,21 @@ class CocktailsListViewModel @Inject constructor(
             //SUBCATEGORY
             //get cocktails
             val result = interactor.fetchListCocktails(CATEGORY, SUBCATEGORY)
+
+            val resultUI = result.map( object : ResultCocktail.Mapper<CocktailResultUI>{
+                override fun mapToUi(
+                    cocktailDomainDomain: List<CocktailDomain>,
+                    message: String
+                ): CocktailResultUI =
+                    if(message.isEmpty()){
+                        CocktailResultUI.Success(list = cocktailDomainDomain.map {
+                            CocktailUI( it.title)
+                        })
+                    }else
+                        CocktailResultUI.Failure(message = message)
+            })
+
+            communications.showCocktailListState(state = resultUI)
             communications.showProgress(View.GONE)
         }
     }
@@ -63,14 +86,21 @@ class CocktailsListViewModel @Inject constructor(
         communications.observeProgress(owner, observer)
     }
 
-    override fun observeState(owner: LifecycleOwner, observer: Observer<SubcategoryResultUI>) {
-        communications.observeState(owner, observer)
+    override fun observeStateSubcategoryList(
+        owner: LifecycleOwner, observer: Observer<SubcategoryResultUI>){
+          communications.observeStateSubcategoryList(owner, observer)
     }
 
+    override fun observeStateCocktailList(
+        owner: LifecycleOwner,
+        observer: Observer<CocktailResultUI>
+    ) {
+        communications.observeStateCocktailList(owner, observer)
+    }
 
     companion object {
-        var CATEGORY = "In"
-        var SUBCATEGORY = "11"
+        var CATEGORY = CATEGORY_DEFAULT
+        var SUBCATEGORY = SUBCATEGORY_DEFAULT
     }
 
 }

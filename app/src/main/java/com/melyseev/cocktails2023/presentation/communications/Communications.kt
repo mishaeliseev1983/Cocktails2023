@@ -3,6 +3,7 @@ package com.melyseev.cocktails2023.presentation.communications
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import javax.inject.Inject
 
@@ -52,9 +53,14 @@ interface Communications {
         class Base @Inject constructor(): ProgressCommunication, Post<Int>()
     }
 
-    interface SubcategoryStateCommunication : Mutable<SubcategoryResultUI> {
-        class Base  @Inject constructor():  SubcategoryStateCommunication,
+    interface SubcategoryListStateCommunication : Mutable<SubcategoryResultUI> {
+        class Base  @Inject constructor():  SubcategoryListStateCommunication,
             Post<SubcategoryResultUI>()
+    }
+
+    interface CocktailListStateCommunication : Mutable<CocktailResultUI> {
+        class Base  @Inject constructor():  CocktailListStateCommunication,
+            Post<CocktailResultUI>()
     }
 
 }

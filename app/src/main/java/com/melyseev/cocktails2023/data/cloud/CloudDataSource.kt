@@ -9,6 +9,7 @@ import com.melyseev.cocktails2023.data.list_category.subcategory_category.ListCa
 import com.melyseev.cocktails2023.data.list_category.subcategory_glass.ListGlassDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_ingredient.ListIngredientDto
 import com.melyseev.cocktails2023.data.short_describe_cocktail.ShortDto
+import com.melyseev.cocktails2023.domain.DomainException
 import javax.inject.Inject
 
 interface CloudDataSource {
@@ -27,7 +28,7 @@ interface CloudDataSource {
                 BEGIN_G -> service.getCocktailListByGlass(subcategory = subcategory)
                 BEGIN_A -> service.getCocktailListByAlcoholic(subcategory = subcategory)
                 BEGIN_I -> service.getCocktailListByIngredient(subcategory = subcategory)
-                else -> service.getCocktailListByAlcoholic(subcategory = subcategory)
+                else -> throw DomainException.UnknownErrorException
             }
         }
 

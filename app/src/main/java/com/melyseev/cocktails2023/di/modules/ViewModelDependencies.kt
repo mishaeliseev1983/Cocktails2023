@@ -9,7 +9,7 @@ import com.melyseev.cocktails2023.domain.CocktailsRepository
 import com.melyseev.cocktails2023.domain.HandleDomainExceptionToString
 import com.melyseev.cocktails2023.presentation.DispatchersList
 import com.melyseev.cocktails2023.presentation.communications.Communications
-import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
+import com.melyseev.cocktails2023.presentation.communications.CocktailsCommunications
 import dagger.Binds
 import dagger.Module
 
@@ -22,13 +22,20 @@ interface ViewModelDependencies {
 
     @ApplicationScope
     @Binds
-    fun provideNumberCommunication(param: SubcategoryCommunications.Base): SubcategoryCommunications
+    fun provideNumberCommunication(param: CocktailsCommunications.Base): CocktailsCommunications
 
     @Binds
     fun provideProgressCommunication(param: Communications.ProgressCommunication.Base): Communications.ProgressCommunication
 
     @Binds
-    fun provideStateCommunication(param: Communications.SubcategoryStateCommunication.Base): Communications.SubcategoryStateCommunication
+    fun provideStateListSubcategoryCommunication(param: Communications.SubcategoryListStateCommunication.Base): Communications.SubcategoryListStateCommunication
+
+
+    @Binds
+    fun provideStateListCocktailCommunication(param: Communications.CocktailListStateCommunication.Base): Communications.CocktailListStateCommunication
+
+
+
 
 
     @ApplicationScope

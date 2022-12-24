@@ -6,7 +6,8 @@ import com.melyseev.cocktails2023.domain.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.cocktails.ResultCocktail
 import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.communications.SubcategoryCommunications
+import com.melyseev.cocktails2023.presentation.communications.CocktailsCommunications
+import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -15,7 +16,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 abstract class BaseTestCocktailsListViewModel {
 
 
-    class TestSubcategoryCommunications: SubcategoryCommunications{
+    class TestSubcategoryCommunications: CocktailsCommunications{
 
         val listShowProgress = mutableListOf<Int>()
         val listShowState = mutableListOf<SubcategoryResultUI>()
@@ -24,8 +25,12 @@ abstract class BaseTestCocktailsListViewModel {
             listShowProgress.add(value)
         }
 
-        override fun showState(state: SubcategoryResultUI) {
-            listShowState.add(state)
+        override fun showSubcategoryListState(state: SubcategoryResultUI) {
+           listShowState.add(state)
+        }
+
+        override fun showCocktailListState(state: CocktailResultUI) {
+            TODO("Not yet implemented")
         }
 
 
@@ -33,8 +38,10 @@ abstract class BaseTestCocktailsListViewModel {
             TODO("Not yet implemented")
         }
 
-        override fun observeState(owner: LifecycleOwner, observer: Observer<SubcategoryResultUI>) {
-            TODO("Not yet implemented")
+        override fun observeStateSubcategoryList(
+            owner: LifecycleOwner,
+            observer: Observer<SubcategoryResultUI>){
+
         }
 
 
