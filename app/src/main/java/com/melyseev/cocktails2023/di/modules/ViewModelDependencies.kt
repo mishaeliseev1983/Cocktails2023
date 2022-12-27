@@ -4,12 +4,15 @@ package com.melyseev.cocktails2023.di.modules
 import com.melyseev.cocktails2023.data.CocktailsRepositoryImpl
 import com.melyseev.cocktails2023.data.HandleErrorToDomainException
 import com.melyseev.cocktails2023.di.ApplicationScope
-import com.melyseev.cocktails2023.domain.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.CocktailsRepository
+import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
+import com.melyseev.cocktails2023.domain.main.CocktailsRepository
 import com.melyseev.cocktails2023.domain.HandleDomainExceptionToString
-import com.melyseev.cocktails2023.presentation.DispatchersList
-import com.melyseev.cocktails2023.presentation.communications.Communications
-import com.melyseev.cocktails2023.presentation.communications.CocktailsCommunications
+import com.melyseev.cocktails2023.presentation.main.DispatchersList
+import com.melyseev.cocktails2023.common.Communications
+import com.melyseev.cocktails2023.data.SelectCategorySubcategoryRepositoryImpl
+import com.melyseev.cocktails2023.domain.SelectCategorySubcategoryRepository
+import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
+import com.melyseev.cocktails2023.presentation.select_category.communications.SelectCategoryCommunications
 import dagger.Binds
 import dagger.Module
 
@@ -34,8 +37,15 @@ interface ViewModelDependencies {
     @Binds
     fun provideStateListCocktailCommunication(param: Communications.CocktailListStateCommunication.Base): Communications.CocktailListStateCommunication
 
+    @Binds
+    fun provideCategoryNameStateCommunication(param: Communications.CategoryNameStateCommunication.Base): Communications.CategoryNameStateCommunication
+
+    @Binds
+    fun provideStateSelectedCategoryCommunication(param : Communications.SelectedCategoryCommunication.Base): Communications.SelectedCategoryCommunication
 
 
+    @Binds
+    fun provideStateSelectCategoryCommunication(param: SelectCategoryCommunications.Base): SelectCategoryCommunications
 
 
     @ApplicationScope
@@ -46,6 +56,10 @@ interface ViewModelDependencies {
     @ApplicationScope
     @Binds
     fun provideRepository(param: CocktailsRepositoryImpl): CocktailsRepository
+
+    @ApplicationScope
+    @Binds
+    fun provideRepositorySelect(param: SelectCategorySubcategoryRepositoryImpl): SelectCategorySubcategoryRepository
 
     @ApplicationScope
     @Binds

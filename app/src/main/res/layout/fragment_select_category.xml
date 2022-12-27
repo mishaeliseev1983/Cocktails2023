@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.select_category.SelectCategoryFragment">
+
+    <CheckBox
+        android:id="@+id/checkbox_alcoholic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alcoholic"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_glasses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/glasses"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/categories"
+        android:checked="false"/>
+</LinearLayout>

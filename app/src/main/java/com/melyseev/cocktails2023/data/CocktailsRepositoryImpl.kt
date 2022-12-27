@@ -1,16 +1,15 @@
 package com.melyseev.cocktails2023.data
 
 import com.melyseev.cocktails2023.data.cloud.CloudDataSource
-import com.melyseev.cocktails2023.data.common.BEGIN_A
-import com.melyseev.cocktails2023.data.common.BEGIN_C
-import com.melyseev.cocktails2023.data.common.BEGIN_G
-import com.melyseev.cocktails2023.data.common.BEGIN_I
+import com.melyseev.cocktails2023.common.BEGIN_A
+import com.melyseev.cocktails2023.common.BEGIN_C
+import com.melyseev.cocktails2023.common.BEGIN_G
+import com.melyseev.cocktails2023.common.BEGIN_I
 import com.melyseev.cocktails2023.data.list_category.MapDrinkToDomain
 import com.melyseev.cocktails2023.data.short_describe_cocktail.Drink
-import com.melyseev.cocktails2023.domain.CocktailsRepository
-import com.melyseev.cocktails2023.domain.DomainException
-import com.melyseev.cocktails2023.domain.cocktails.CocktailDomain
-import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.domain.main.CocktailsRepository
+import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
+import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -45,6 +44,7 @@ class CocktailsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchListCocktails(category: String, subcategory: String): List<CocktailDomain> {
+        if(subcategory.isEmpty()) return emptyList()
         try {
             val shortDto = cloudDataSource.getCocktailsBySubcategory(
                 category = category,

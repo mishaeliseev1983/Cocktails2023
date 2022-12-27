@@ -2,13 +2,14 @@ package com.melyseev.cocktails2023.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.melyseev.cocktails2023.domain.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.cocktails.ResultCocktail
-import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
-import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.communications.CocktailsCommunications
-import com.melyseev.cocktails2023.presentation.list_cocktails.CocktailResultUI
-import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
+import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
+import com.melyseev.cocktails2023.domain.main.cocktails.ResultCocktail
+import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.presentation.main.DispatchersList
+import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
+import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -16,7 +17,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 abstract class BaseTestCocktailsListViewModel {
 
 
-    class TestSubcategoryCommunications: CocktailsCommunications{
+    class TestSubcategoryCommunications: CocktailsCommunications {
 
         val listShowProgress = mutableListOf<Int>()
         val listShowState = mutableListOf<SubcategoryResultUI>()
@@ -33,6 +34,10 @@ abstract class BaseTestCocktailsListViewModel {
             TODO("Not yet implemented")
         }
 
+        override fun showCategoryNameState(state: String) {
+            TODO("Not yet implemented")
+        }
+
 
         override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
             TODO("Not yet implemented")
@@ -42,6 +47,17 @@ abstract class BaseTestCocktailsListViewModel {
             owner: LifecycleOwner,
             observer: Observer<SubcategoryResultUI>){
 
+        }
+
+        override fun observeStateCocktailList(
+            owner: LifecycleOwner,
+            observer: Observer<CocktailResultUI>
+        ) {
+            TODO("Not yet implemented")
+        }
+
+        override fun observeStateCategoryName(owner: LifecycleOwner, observer: Observer<String>) {
+            TODO("Not yet implemented")
         }
 
 
@@ -62,6 +78,22 @@ abstract class BaseTestCocktailsListViewModel {
             category: String,
             subcategory: String
         ): ResultCocktail {
+            TODO("Not yet implemented")
+        }
+
+        override fun getCategory(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun getSubcategory(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun changeCategory(category: String) {
+            TODO("Not yet implemented")
+        }
+
+        override fun changeSubcategory(subcategory: String) {
             TODO("Not yet implemented")
         }
 

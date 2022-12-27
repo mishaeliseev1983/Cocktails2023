@@ -1,8 +1,11 @@
 package com.melyseev.cocktails2023.domain
 
-import com.melyseev.cocktails2023.domain.cocktails.CocktailDomain
-import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
-import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.data.SelectCategorySubcategoryRepositoryImpl
+import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
+import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
+import com.melyseev.cocktails2023.domain.main.CocktailsRepository
+import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -19,13 +22,16 @@ class TestCocktailsInteractor {
 
     lateinit var repository: TestRepositoryImpl
 
+    lateinit var repositorySelect: SelectCategorySubcategoryRepository
+
     lateinit var handleDomainExceptionToString: HandleDomainExceptionToString
     @Before
     fun setUp() {
 
+        repositorySelect = TestSelectCategorySubcategoryRepositoryImpl()
         handleDomainExceptionToString = HandleDomainExceptionToString.Base()
         repository = TestRepositoryImpl()
-        interactor = CocktailsInteractor.Base(repository, handleDomainExceptionToString)
+        interactor = CocktailsInteractor.Base(repository, repositorySelect, handleDomainExceptionToString)
     }
 
 
@@ -64,6 +70,25 @@ class TestCocktailsInteractor {
         )
     }
 
+
+    class TestSelectCategorySubcategoryRepositoryImpl : SelectCategorySubcategoryRepository {
+        override fun changeCategory(category: String) {
+
+        }
+
+        override fun getCategory(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun changeSubcategory(category: String) {
+            TODO("Not yet implemented")
+        }
+
+        override fun getSubcategory(): String {
+            TODO("Not yet implemented")
+        }
+
+    }
 
     class TestRepositoryImpl : CocktailsRepository {
 

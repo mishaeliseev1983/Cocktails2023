@@ -3,8 +3,6 @@ package com.melyseev.cocktails2023.di.modules
 import com.melyseev.cocktails2023.data.cloud.CloudDataSource
 import com.melyseev.cocktails2023.data.cloud.CloudeModule
 import com.melyseev.cocktails2023.data.cloud.CocktailsService
-import com.melyseev.cocktails2023.data.list_category.MapDrinkToDomain
-import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
 import dagger.Module
 import dagger.Provides
 

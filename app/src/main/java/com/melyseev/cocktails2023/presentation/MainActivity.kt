@@ -3,6 +3,7 @@ package com.melyseev.cocktails2023.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.melyseev.cocktails2023.R
+import com.melyseev.cocktails2023.presentation.main.CocktailsListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

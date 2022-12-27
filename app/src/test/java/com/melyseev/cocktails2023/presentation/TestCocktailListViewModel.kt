@@ -1,9 +1,12 @@
 package com.melyseev.cocktails2023.presentation
 
-import com.melyseev.cocktails2023.domain.subcategories.ResultSubcategory
-import com.melyseev.cocktails2023.domain.subcategories.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.list_subcategories.SubcategoryUI
+import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
+import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.presentation.main.CocktailsListViewModel
+import com.melyseev.cocktails2023.presentation.main.DispatchersList
+import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryUI
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +29,7 @@ class TestCocktailListViewModel {
 
 
     @Test
-    fun init_success() {
+    fun init_success()  = runBlocking {
 
         //expect
         val listExpected = mutableListOf<SubcategoryDomain>()
@@ -50,7 +53,7 @@ class TestCocktailListViewModel {
 
 
     @Test
-    fun init_failure() {
+    fun init_failure()  = runBlocking {
 
         //expect
         val errorMessage= "no connection"
