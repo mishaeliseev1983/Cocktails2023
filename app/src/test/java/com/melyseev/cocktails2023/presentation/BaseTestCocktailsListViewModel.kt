@@ -9,7 +9,6 @@ import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher

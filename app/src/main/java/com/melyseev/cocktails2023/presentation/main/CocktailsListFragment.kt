@@ -13,8 +13,8 @@ import com.melyseev.cocktails2023.presentation.App
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.recyclerview.CocktailsListAdapter
 import com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview.SubcategoryListAdapter
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview.SubcategoryUIClick
 import com.melyseev.cocktails2023.presentation.select_category.SelectCategoryFragment
 import javax.inject.Inject
@@ -68,8 +68,6 @@ class CocktailsListFragment : Fragment() {
         binding.recyclerViewSubcategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewSubcategory.adapter = subcategoryListAdapter
-
-
 
         val cocktailListAdapter = CocktailsListAdapter()
         binding.recyclerViewCocktails.layoutManager =

@@ -4,8 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.select_category.communications.SelectCategoryCommunications
+import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import javax.inject.Inject
 
 interface Communications {
@@ -72,5 +71,13 @@ interface Communications {
     interface SelectedCategoryCommunication: Mutable<String> {
         class Base @Inject constructor(): SelectedCategoryCommunication, Post<String>()
     }
+
+    /*
+    interface SubcategorySelectedListStateCommunication : Mutable<SubcategoryResultUI> {
+        class Base  @Inject constructor():  SubcategorySelectedListStateCommunication,
+            Post<SubcategoryResultUI>()
+    }
+
+     */
 
 }

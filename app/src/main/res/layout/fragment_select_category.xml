@@ -4,7 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="5dp"
     tools:context=".presentation.select_category.SelectCategoryFragment">
+
+    <TextView
+        android:id="@+id/tv_select_category"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/select_category">
+    </TextView>
 
     <CheckBox
         android:id="@+id/checkbox_alcoholic"
@@ -33,4 +44,19 @@
         android:layout_height="wrap_content"
         android:text="@string/categories"
         android:checked="false"/>
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/btn_select_subcategories"
+        android:text="@string/select_subcategories"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:layout_gravity="bottom"
+        android:id="@+id/btn_back_to_cocktails"
+        android:text="@string/back_cocktails"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
 </LinearLayout>

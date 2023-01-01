@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.presentation.main.list_subcategories
+package com.melyseev.cocktails2023.presentation
 
 sealed class SubcategoryResultUI{
     data class Success(val list: List<SubcategoryUI>): SubcategoryResultUI()

@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.databinding.FragmentSelectCategoryBinding
 import com.melyseev.cocktails2023.presentation.App
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
+import com.melyseev.cocktails2023.presentation.select_subcategory.SelectSubcategoryFragment
 import javax.inject.Inject
 
 
@@ -34,7 +35,7 @@ class SelectCategoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSelectCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,13 +45,18 @@ class SelectCategoryFragment : Fragment() {
 
         daggerApplicationComponent.inject(this)
 
-        val listCheckedBox = listOf<CheckBox>(
+        binding.btnSelectSubcategories.setOnClickListener {
+            val fragment = SelectSubcategoryFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction().
+            addToBackStack("").
+            replace(R.id.container, fragment).commit()
+        }
+        val listCheckedBox = listOf(
             binding.checkboxCategories, binding.checkboxAlcoholic,
             binding.checkboxGlasses, binding.checkboxIngredients
         )
 
         listCheckedBox.forEach { checkBox ->
-
             val selectedCategory = checkBox.text.toString()
             checkBox.setOnClickListener {
                     viewModel.fetchSelectedCategory2(selectedCategory)
@@ -65,6 +71,11 @@ class SelectCategoryFragment : Fragment() {
             viewModel.changeCategory(selectedCheck)
         }
         viewModel.fetchSelectedCategory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

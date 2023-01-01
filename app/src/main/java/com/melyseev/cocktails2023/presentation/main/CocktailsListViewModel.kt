@@ -14,8 +14,8 @@ import com.melyseev.cocktails2023.presentation.main.communications.CocktailsComm
 import com.melyseev.cocktails2023.presentation.main.communications.ObserveCocktails
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.SubcategoryUI
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

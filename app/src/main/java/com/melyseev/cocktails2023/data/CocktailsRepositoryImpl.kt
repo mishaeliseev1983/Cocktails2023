@@ -20,7 +20,7 @@ class CocktailsRepositoryImpl @Inject constructor(
 ) :
     CocktailsRepository {
 
-    override suspend fun fetchListSubcategory(category: String): List<SubcategoryDomain> {
+    override suspend fun fetchListSubcategories(category: String): List<SubcategoryDomain> {
         try {
             val listSubcategoryDomain = when (category.first().lowercase()) {
                 BEGIN_C -> cloudDataSource.getSubcategoriesByCategory().drinks.map {

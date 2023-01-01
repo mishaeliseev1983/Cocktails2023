@@ -1,9 +1,8 @@
 package com.melyseev.cocktails2023.domain
 
-import com.melyseev.cocktails2023.data.SelectCategorySubcategoryRepositoryImpl
-import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.CocktailsRepository
+import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import kotlinx.coroutines.runBlocking
@@ -96,7 +95,7 @@ class TestCocktailsInteractor {
         var expectListSubcategoryDomain = mutableListOf<SubcategoryDomain>()
         lateinit var expectDomainError: DomainException
 
-        override suspend fun fetchListSubcategory(category: String): List<SubcategoryDomain> {
+        override suspend fun fetchListSubcategories(category: String): List<SubcategoryDomain> {
             if (expectError)
                 throw expectDomainError
             return expectListSubcategoryDomain

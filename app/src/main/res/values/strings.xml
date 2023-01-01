@@ -7,4 +7,8 @@
     <string name="glasses">Glasses</string>
     <string name="ingredients">Ingredients</string>
     <string name="categories">Categories of drinks</string>
+    <string name="select_subcategories">Select subcategories</string>
+    <string name="back_cocktails">Back to cocktails</string>
+    <string name="select_category">Select category</string>
+    <string name="back_categories">Back to categories</string>
 </resources>

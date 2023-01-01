@@ -29,7 +29,7 @@ interface CocktailsInteractor {
 
         override suspend fun fetchListSubcategory(category: String): ResultSubcategory {
             return try {
-                val list = repository.fetchListSubcategory(category)
+                val list = repository.fetchListSubcategories(category)
                 ResultSubcategory.Success(list)
             } catch (e: DomainException) {
                 ResultSubcategory.Error(handleDomainExceptionToString.handleError(e))

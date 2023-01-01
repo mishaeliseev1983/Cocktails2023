@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview
+package com.melyseev.cocktails2023.presentation.select_subcategory.recyclerview
 
 import androidx.recyclerview.widget.DiffUtil
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
