@@ -11,6 +11,9 @@ interface SubcategoriesDao {
     @Insert
     suspend fun insert(entity: SubcategoryEntity)
 
-    @Query("SELECT * from ${SubcategoryEntity.TABLE_SUBCATEGORY}")
-    suspend fun getAllCategories(): List<SubcategoryEntity>
+    @Query("SELECT * from ${SubcategoryEntity.TABLE_SUBCATEGORY} WHERE ${SubcategoryEntity.ID_CATEGORY} = :idCategory")
+    suspend fun getAllSubcategories(idCategory: Long): List<SubcategoryEntity>
+
+    @Query("UPDATE ${SubcategoryEntity.TABLE_SUBCATEGORY} SET ${SubcategoryEntity.SUBCATEGORY_CHECKED} = :checkValue WHERE ${SubcategoryEntity.ID_CATEGORY} = :idCategory AND  ${SubcategoryEntity.SUBCATEGORY_NAME} = :subcategory")
+    suspend fun updateSubcategory(idCategory: Long, subcategory: String, checkValue: Int)
 }

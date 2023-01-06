@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
-import com.melyseev.cocktails2023.domain.main.cocktails.ResultCocktail
+import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
+import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
@@ -37,7 +37,9 @@ class CocktailsListViewModel @Inject constructor(
 
     override suspend fun fetchListSubcategory() {
 
-        val result = interactor.fetchListSubcategory(interactor.getCategory())
+        val result = interactor.fetchListSubcategorySelected(interactor.getCategory())
+
+
         val resultUI = result.map(object : ResultSubcategory.Mapper<SubcategoryResultUI> {
             override fun mapToUi(
                 listSubcategoryDomain: List<SubcategoryDomain>,
@@ -63,10 +65,7 @@ class CocktailsListViewModel @Inject constructor(
                 }
 
         })
-
-
         communications.showSubcategoryListState(state = resultUI)
-
     }
 
 
@@ -78,12 +77,13 @@ class CocktailsListViewModel @Inject constructor(
 
         val resultUI = result.map(object : ResultCocktail.Mapper<CocktailResultUI> {
             override fun mapToUi(
-                cocktailDomainDomain: List<CocktailDomain>,
+                cocktailDomainDomain: List<CocktailShortDomain>,
                 message: String
             ): CocktailResultUI =
                 if (message.isEmpty()) {
                     CocktailResultUI.Success(list = cocktailDomainDomain.map {
-                        CocktailUI(it.title)
+
+                        CocktailUI(it.id, it.title, it.urlImage)
                     })
                 } else
                     CocktailResultUI.Failure(message = message)
@@ -120,7 +120,7 @@ class CocktailsListViewModel @Inject constructor(
     }
 
 
-    fun getNewSubcategoryCocktails(subcategory: String) {
+    fun selectSubcategoryCocktails(subcategory: String) {
         interactor.changeSubcategory(subcategory)
         fetchData()
     }

@@ -14,6 +14,5 @@ sealed class ResultSubcategory {
         override fun <T> map(mapper: Mapper<T>): T {
             return mapper.mapToUi(emptyList(), message)
         }
-
     }
 }

@@ -8,7 +8,7 @@ import com.melyseev.cocktails2023.common.Communications
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
 
 
-class SubcategoriesListAdapter() :
+class SubcategoriesListAdapter(val onCheckedSubcategory: (SubcategoryUI, Boolean) -> Unit) :
     ListAdapter<SubcategoryUI, SubcategoryViewHolder>(SubcategoryItemDiffCallback()),
     Communications.Change<Unit, List<SubcategoryUI>> {
 
@@ -22,6 +22,10 @@ class SubcategoriesListAdapter() :
         val element = getItem(position)
         holder.checkBox.text = element.title
         holder.checkBox.isChecked = element.isSelected
+
+        holder.checkBox.setOnClickListener {
+            onCheckedSubcategory.invoke(element, holder.checkBox.isChecked)
+        }
     }
 
     override fun change(source: List<SubcategoryUI>) {

@@ -2,7 +2,7 @@ package com.melyseev.cocktails2023.domain
 
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.CocktailsRepository
-import com.melyseev.cocktails2023.domain.main.cocktails.CocktailDomain
+import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import kotlinx.coroutines.runBlocking
@@ -104,7 +104,7 @@ class TestCocktailsInteractor {
         override suspend fun fetchListCocktails(
             category: String,
             subcategory: String
-        ): List<CocktailDomain> {
+        ): List<CocktailShortDomain> {
             TODO("Not yet implemented")
         }
 

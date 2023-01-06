@@ -4,11 +4,12 @@ import com.melyseev.cocktails2023.common.BEGIN_A
 import com.melyseev.cocktails2023.common.BEGIN_C
 import com.melyseev.cocktails2023.common.BEGIN_G
 import com.melyseev.cocktails2023.common.BEGIN_I
+import com.melyseev.cocktails2023.data.details_cocktail.DetailsCocktailDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_alcoholic.ListAlcoholicDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_category.ListCategoryDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_glass.ListGlassDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_ingredient.ListIngredientDto
-import com.melyseev.cocktails2023.data.short_describe_cocktail.ShortDto
+import com.melyseev.cocktails2023.data.short_cocktail.ShortDto
 import com.melyseev.cocktails2023.domain.DomainException
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ interface CloudDataSource {
     suspend fun getSubcategoriesByGlass(): ListGlassDto
     suspend fun getSubcategoriesByIngredient(): ListIngredientDto
     suspend fun getSubcategoriesByAlcoholic(): ListAlcoholicDto
+    suspend fun getDetailsCocktailById(cocktailId: Int): DetailsCocktailDto
 
     class Base @Inject constructor(private val service: CocktailsService) : CloudDataSource {
 
@@ -36,5 +38,8 @@ interface CloudDataSource {
         override suspend fun getSubcategoriesByGlass() = service.getSubcategoriesByGlass()
         override suspend fun getSubcategoriesByIngredient() = service.getSubcategoriesByIngredient()
         override suspend fun getSubcategoriesByAlcoholic() = service.getSubcategoriesByAlcoholic()
+        override suspend fun getDetailsCocktailById(cocktailId: Int) =
+            service.getDetailsCocktail(cocktailId)
+
     }
 }

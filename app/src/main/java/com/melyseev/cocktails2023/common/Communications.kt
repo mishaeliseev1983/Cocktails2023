@@ -3,8 +3,9 @@ package com.melyseev.cocktails2023.common
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailResultUI
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import javax.inject.Inject
 
 interface Communications {
@@ -33,13 +34,13 @@ interface Communications {
             liveData.observe(owner, observer)
         }
     }
-/*
-    abstract class UI<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
-        override fun map(source: T) {
-            liveData.value = source
+
+    abstract class Ui<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
+        override fun change(source: T) {
+            liveData.value = source!!
         }
     }
-*/
+
     abstract class Post<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
         override fun change(source: T) {
             source.let {
@@ -48,6 +49,9 @@ interface Communications {
         }
     }
 
+
+    abstract class SingleUi<T> : Ui<T>(SingleLiveEvent())
+    abstract class SinglePost<T> : Post<T>(SingleLiveEvent())
 
     interface ProgressCommunication : Mutable<Int> {
         class Base @Inject constructor(): ProgressCommunication, Post<Int>()
@@ -70,6 +74,10 @@ interface Communications {
 
     interface SelectedCategoryCommunication: Mutable<String> {
         class Base @Inject constructor(): SelectedCategoryCommunication, Post<String>()
+    }
+
+    interface DetailsCocktailStateCommunication: Mutable<DetailsCocktailResultUI> {
+        class Base @Inject constructor(): DetailsCocktailStateCommunication, Post<DetailsCocktailResultUI>()
     }
 
     /*

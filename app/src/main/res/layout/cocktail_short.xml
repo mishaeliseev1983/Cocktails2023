@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="320dp"
     android:id="@+id/card_view"
     android:layout_gravity="center"
     card_view:cardCornerRadius="4dp">
@@ -15,9 +15,17 @@
     <TextView
         android:id="@+id/tv_cocktail_title"
         tools:text="Orange cocktail"
+        android:layout_margin="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:src="@drawable/loading"
+        android:layout_height="300dp">
+    </ImageView>
+
     </LinearLayout>
 
 

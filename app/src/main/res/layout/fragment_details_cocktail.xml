@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.details_cocktail.DetailsCocktailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ProgressBar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <ImageView
+            android:id="@+id/imageView"
+            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/loading"></ImageView>
+
+
+        <ImageView
+            android:id="@+id/imageViewLove"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_favorite_red"></ImageView>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_cocktail_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:text="@string/title_cocktail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <TextView
+        android:id="@+id/tv_cocktail_intsructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/instructions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+    </LinearLayout>
+</ScrollView>

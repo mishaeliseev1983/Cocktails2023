@@ -12,7 +12,4 @@ import com.melyseev.cocktails2023.data.cache.entity.SubcategoryEntity
 abstract class SubcategoriesDataBase  : RoomDatabase() {
     abstract fun subcategoriesDao(): SubcategoriesDao
     abstract fun categoriesDao(): CategoriesDao
-    companion object{
-        val DATABASE_NAME = "cocktailsdb2023"
-    }
 }

@@ -3,7 +3,7 @@ package com.melyseev.cocktails2023.presentation
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.main.cocktails.ResultCocktail
+import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import com.melyseev.cocktails2023.presentation.main.DispatchersList

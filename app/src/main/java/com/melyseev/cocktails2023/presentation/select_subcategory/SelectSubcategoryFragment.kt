@@ -22,6 +22,12 @@ class SelectSubcategoryFragment : Fragment() {
         get() = _binding
             ?: throw RuntimeException("Object FragmentSelectSubcategoryBinding is null")
 
+
+    private val subcategoriesListAdapter = SubcategoriesListAdapter{
+        subcategoryUI, checked ->
+            viewModel.updateSelectSubcategory(subcategoryUI.title,checked)
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModuleFactory
 
@@ -30,7 +36,6 @@ class SelectSubcategoryFragment : Fragment() {
     }
 
     private val daggerApplicationComponent by lazy {
-       // (requireActivity().application as App).component
         (requireActivity().application as App).component
     }
 
@@ -47,11 +52,14 @@ class SelectSubcategoryFragment : Fragment() {
 
         daggerApplicationComponent.inject(this)
 
-        val subcategoriesListAdapter = SubcategoriesListAdapter()
+
         binding.rvSubcategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         binding.rvSubcategory.adapter = subcategoriesListAdapter
+
+
+        viewModel.fetchListSubcategory()
 
         viewModel.observeProgress(this){
             binding.progress.visibility = it
@@ -69,7 +77,6 @@ class SelectSubcategoryFragment : Fragment() {
         }
 
 
-        viewModel.fetchListSubcategory()
     }
 
     override fun onDestroy() {

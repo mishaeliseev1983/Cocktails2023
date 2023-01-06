@@ -2,6 +2,7 @@ package com.melyseev.cocktails2023.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.melyseev.cocktails2023.di.ViewModelKey
+import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailViewModel
 import com.melyseev.cocktails2023.presentation.main.CocktailsListViewModel
 import com.melyseev.cocktails2023.presentation.select_category.SelectCategoryViewModel
 import com.melyseev.cocktails2023.presentation.select_subcategory.SelectSubcategoryViewModel
@@ -28,4 +29,9 @@ interface ViewModelModule {
     @ViewModelKey(SelectSubcategoryViewModel::class)
     @Binds
     fun bindSelectSubcategoryViewModel(impl: SelectSubcategoryViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(DetailsCocktailViewModel::class)
+    @Binds
+    fun bindDetailsCocktailViewModel(impl: DetailsCocktailViewModel): ViewModel
 }

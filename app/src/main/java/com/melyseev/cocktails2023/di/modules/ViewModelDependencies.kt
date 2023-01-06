@@ -10,6 +10,7 @@ import com.melyseev.cocktails2023.domain.HandleDomainExceptionToString
 import com.melyseev.cocktails2023.domain.SelectCategorySubcategoryRepository
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.CocktailsRepository
+import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailCommunications
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
 import com.melyseev.cocktails2023.presentation.main.communications.SubcategoriesCommunications
@@ -20,17 +21,17 @@ import dagger.Module
 @Module
 interface ViewModelDependencies {
 
-    @ApplicationScope
     @Binds
     fun provideDispatchersList(param: DispatchersList.Base): DispatchersList
 
-    @ApplicationScope
     @Binds
     fun provideSubcategoriesCommunications(param: SubcategoriesCommunications.Base): SubcategoriesCommunications
 
-    @ApplicationScope
     @Binds
     fun provideCocktailsCommunications(param: CocktailsCommunications.Base): CocktailsCommunications
+
+    @Binds
+    fun provideDetailsCocktailCommunications(param: DetailsCocktailCommunications.Base): DetailsCocktailCommunications
 
     @Binds
     fun provideStateSelectCategoryCommunication(param: SelectCategoryCommunications.Base): SelectCategoryCommunications
@@ -53,6 +54,8 @@ interface ViewModelDependencies {
     @Binds
     fun provideStateSelectedCategoryCommunication(param: Communications.SelectedCategoryCommunication.Base): Communications.SelectedCategoryCommunication
 
+    @Binds
+    fun provideStateDetailsCocktailStateCommunication(param: Communications.DetailsCocktailStateCommunication.Base): Communications.DetailsCocktailStateCommunication
 
     @ApplicationScope
     @Binds
@@ -70,7 +73,6 @@ interface ViewModelDependencies {
     @ApplicationScope
     @Binds
     fun provideHandleErrorToDomainException(param: HandleErrorToDomainException.Base): HandleErrorToDomainException
-
 
     @ApplicationScope
     @Binds

@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.data.short_describe_cocktail
+package com.melyseev.cocktails2023.data.short_cocktail
 
 data class Drink(
     val idDrink: String,

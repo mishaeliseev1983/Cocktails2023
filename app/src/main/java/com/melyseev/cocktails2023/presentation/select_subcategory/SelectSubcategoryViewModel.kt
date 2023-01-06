@@ -20,7 +20,7 @@ class SelectSubcategoryViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
     private val communications: SubcategoriesCommunications,
     private val interactor: CocktailsInteractor
-) : ViewModel(), ObserveSubcategories, FetchSubcategoryList{
+) : ViewModel(), ObserveSubcategories, FetchSubcategoryList {
 
 
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
@@ -31,7 +31,7 @@ class SelectSubcategoryViewModel @Inject constructor(
         owner: LifecycleOwner,
         observer: Observer<SubcategoryResultUI>
     ) {
-       communications.observeStateSubcategoryList(owner, observer)
+        communications.observeStateSubcategoryList(owner, observer)
     }
 
     override fun fetchListSubcategory() {
@@ -61,7 +61,36 @@ class SelectSubcategoryViewModel @Inject constructor(
             communications.showSubcategoryListState(state = resultUI)
             communications.showProgress(View.GONE)
         }
-
-
     }
+
+    override fun updateSelectSubcategory(subcategory: String, isSelect: Boolean) {
+        viewModelScope.launch {
+            communications.showProgress(View.VISIBLE)
+            interactor.updateSelectSubcategory(interactor.getCategory(), subcategory, isSelect)
+
+            val result = interactor.fetchListSubcategory(interactor.getCategory())
+            val resultUI = result.map(object : ResultSubcategory.Mapper<SubcategoryResultUI> {
+                override fun mapToUi(
+                    listSubcategoryDomain: List<SubcategoryDomain>,
+                    message: String
+                ): SubcategoryResultUI =
+                    if (message.isEmpty()) {
+                        val listSubcategoryUI = listSubcategoryDomain.map {
+                            SubcategoryUI(
+                                title = it.title,
+                                isSelected = it.isSelected
+                            )
+                        }
+                        SubcategoryResultUI.Success(listSubcategoryUI)
+                    } else {
+                        SubcategoryResultUI.Failure(message = message)
+                    }
+
+            })
+
+            communications.showSubcategoryListState(state = resultUI)
+            communications.showProgress(View.GONE)
+        }
+    }
+
 }

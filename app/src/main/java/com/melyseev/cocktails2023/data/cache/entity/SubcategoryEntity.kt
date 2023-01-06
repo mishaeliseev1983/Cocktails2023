@@ -12,7 +12,7 @@ data class SubcategoryEntity(
 
     @ColumnInfo(name = ID_CATEGORY) val idCategory: Long,
     @ColumnInfo(name = SUBCATEGORY_NAME) var subcategoryName: String,
-    @ColumnInfo(name = SUBCATEGORY_CHECKED) var subcategoryChecked: Boolean,
+    @ColumnInfo(name = SUBCATEGORY_CHECKED) var subcategoryChecked: Int,
 ){
     companion object {
         const val TABLE_SUBCATEGORY= "TABLE_SUBCATEGORY"

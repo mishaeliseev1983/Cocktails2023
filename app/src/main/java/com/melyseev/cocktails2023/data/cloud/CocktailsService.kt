@@ -4,11 +4,12 @@ import com.melyseev.cocktails2023.common.BEGIN_A
 import com.melyseev.cocktails2023.common.BEGIN_C
 import com.melyseev.cocktails2023.common.BEGIN_G
 import com.melyseev.cocktails2023.common.BEGIN_I
+import com.melyseev.cocktails2023.data.details_cocktail.DetailsCocktailDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_alcoholic.ListAlcoholicDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_category.ListCategoryDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_glass.ListGlassDto
 import com.melyseev.cocktails2023.data.list_category.subcategory_ingredient.ListIngredientDto
-import com.melyseev.cocktails2023.data.short_describe_cocktail.ShortDto
+import com.melyseev.cocktails2023.data.short_cocktail.ShortDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -58,5 +59,10 @@ interface CocktailsService {
     suspend fun getSubcategoriesByAlcoholic(
         @Query(BEGIN_A) list: String = "list"
     ): ListAlcoholicDto
+
+    @GET("lookup.php")
+    suspend fun getDetailsCocktail(
+        @Query("i") id: Int
+    ) : DetailsCocktailDto
 
 }
