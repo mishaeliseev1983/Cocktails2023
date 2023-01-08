@@ -4,6 +4,6 @@ interface SelectCategorySubcategoryRepository {
     fun changeCategory(category: String)
     fun getCategory(): String
 
-    fun changeSubcategory(category: String)
+    fun changeSubcategory(subcategory: String)
     fun getSubcategory(): String
 }
