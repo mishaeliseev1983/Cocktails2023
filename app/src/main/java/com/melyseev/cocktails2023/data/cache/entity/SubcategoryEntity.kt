@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 data class SubcategoryEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    val id: Int = 0,
 
-    @ColumnInfo(name = ID_CATEGORY) val idCategory: Long,
+    @ColumnInfo(name = ID_CATEGORY) val idCategory: Int,
     @ColumnInfo(name = SUBCATEGORY_NAME) var subcategoryName: String,
     @ColumnInfo(name = SUBCATEGORY_CHECKED) var subcategoryChecked: Int,
 ){
@@ -20,4 +20,9 @@ data class SubcategoryEntity(
         const val SUBCATEGORY_NAME = "SUBCATEGORY_NAME"
         const val SUBCATEGORY_CHECKED = "SUBCATEGORY_CHECKED"
     }
+
+    interface Mapper<T>{
+        fun map(idCategory: Int, subcategoryName: String, subcategoryChecked: Int): T
+    }
+    fun <T> mapToData(mapper: Mapper<T>) = mapper.map(idCategory, subcategoryName, subcategoryChecked)
 }

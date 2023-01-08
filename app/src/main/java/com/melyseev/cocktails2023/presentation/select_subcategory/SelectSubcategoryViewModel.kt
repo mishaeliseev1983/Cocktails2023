@@ -35,7 +35,6 @@ class SelectSubcategoryViewModel @Inject constructor(
     }
 
     override fun fetchListSubcategory() {
-
         viewModelScope.launch(dispatchersList.io()) {
             communications.showProgress(View.VISIBLE)
             val result = interactor.fetchListSubcategory(interactor.getCategory())

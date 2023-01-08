@@ -5,6 +5,7 @@ import com.melyseev.cocktails2023.data.cache.CacheDataSource
 import com.melyseev.cocktails2023.data.cache.CacheModule
 import com.melyseev.cocktails2023.data.cache.SubcategoriesDataBase
 import com.melyseev.cocktails2023.data.cache.dao.CategoriesDao
+import com.melyseev.cocktails2023.data.cache.dao.FavoritesDao
 import com.melyseev.cocktails2023.data.cache.dao.SubcategoriesDao
 import com.melyseev.cocktails2023.presentation.App
 import dagger.Module
@@ -26,6 +27,11 @@ class DataBaseModule {
     @Provides
     fun provideSubcategoriesDao(subcategoriesDataBase: SubcategoriesDataBase): SubcategoriesDao {
         return subcategoriesDataBase.subcategoriesDao()
+    }
+
+    @Provides
+    fun provideFavoritesDao(subcategoriesDataBase: SubcategoriesDataBase): FavoritesDao {
+        return subcategoriesDataBase.favoritesDao()
     }
 
     @Provides

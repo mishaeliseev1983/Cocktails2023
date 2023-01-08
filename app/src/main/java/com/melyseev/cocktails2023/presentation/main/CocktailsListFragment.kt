@@ -53,7 +53,7 @@ class CocktailsListFragment : Fragment() {
 
         daggerApplicationComponent.inject( this )
 
-        binding.btnCategory.setOnClickListener {
+        binding.imageButton.setOnClickListener {
             val fragment =  SelectCategoryFragment.newInstance()
             requireActivity().supportFragmentManager.beginTransaction().
                 addToBackStack("").
@@ -92,8 +92,10 @@ class CocktailsListFragment : Fragment() {
                 is SubcategoryResultUI.Success -> {
                     subcategoryListAdapter.change( it.list )
                     if(!movedScrollPositionSubcategory) {
-                        binding.recyclerViewSubcategory.smoothScrollToPosition(it.list.indexOfFirst { it.isSelected })
-                        movedScrollPositionSubcategory=true
+                       val index = it.list.indexOfFirst { it.isSelected }
+                       if(index!=-1)
+                           binding.recyclerViewSubcategory.smoothScrollToPosition(index)
+                       movedScrollPositionSubcategory=true
                     }
                 }
                 is SubcategoryResultUI.Failure -> {

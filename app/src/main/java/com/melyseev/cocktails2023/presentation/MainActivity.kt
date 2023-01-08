@@ -10,11 +10,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         if (savedInstanceState == null) {
             val cocktailsListFragment= CocktailsListFragment.newInstance()
             supportFragmentManager.beginTransaction().add(R.id.container, cocktailsListFragment).commit()
         }
-
     }
 }

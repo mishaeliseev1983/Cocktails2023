@@ -13,4 +13,7 @@
     <string name="back_categories">Back to categories</string>
     <string name="instructions">Instructions</string>
     <string name="title_cocktail">Title cocktail</string>
+    <string name="favorites">Favorites</string>
+    <string name="cocktail_image">Cocktail image</string>
+    <string name="cocktail_like">Check if like it</string>
 </resources>

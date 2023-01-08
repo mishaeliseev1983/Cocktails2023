@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/imageView"
+        android:contentDescription="@string/cocktail_image"
         android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:src="@drawable/loading"
-        android:layout_height="300dp">
-    </ImageView>
-
+        android:scaleType="centerInside"/>
     </LinearLayout>
 
 

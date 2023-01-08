@@ -36,10 +36,7 @@ class CocktailsListViewModel @Inject constructor(
     }
 
     override suspend fun fetchListSubcategory() {
-
         val result = interactor.fetchListSubcategorySelected(interactor.getCategory())
-
-
         val resultUI = result.map(object : ResultSubcategory.Mapper<SubcategoryResultUI> {
             override fun mapToUi(
                 listSubcategoryDomain: List<SubcategoryDomain>,
@@ -82,7 +79,6 @@ class CocktailsListViewModel @Inject constructor(
             ): CocktailResultUI =
                 if (message.isEmpty()) {
                     CocktailResultUI.Success(list = cocktailDomainDomain.map {
-
                         CocktailUI(it.id, it.title, it.urlImage)
                     })
                 } else
@@ -118,7 +114,6 @@ class CocktailsListViewModel @Inject constructor(
     override fun observeStateCategoryName(owner: LifecycleOwner, observer: Observer<String>) {
         communications.observeStateCategoryName(owner, observer)
     }
-
 
     fun selectSubcategoryCocktails(subcategory: String) {
         interactor.changeSubcategory(subcategory)

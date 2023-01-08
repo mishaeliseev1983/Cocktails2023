@@ -20,6 +20,8 @@ private const val ARG_ID_COCKTAIL = "idCocktail"
 class DetailsCocktailFragment : Fragment() {
     private var idCocktail: Int? = null
 
+    private var cocktailImageUrl: String = ""
+    private var cocktailTitle: String = ""
 
     private var _binding: FragmentDetailsCocktailBinding? = null
     private val binding: FragmentDetailsCocktailBinding
@@ -54,19 +56,21 @@ class DetailsCocktailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        daggerApplicationComponent.inject( this )
+        daggerApplicationComponent.inject(this)
 
-        viewModel.observeProgress(this){
+        viewModel.observeProgress(this) {
             binding.progress.visibility = it
         }
 
-        viewModel.observeStateDetailsCocktail(this){
-            when(it){
+        viewModel.observeStateDetailsCocktail(this) {
+            when (it) {
 
-                is DetailsCocktailResultUI.Success ->{
+                is DetailsCocktailResultUI.Success -> {
                     binding.tvCocktailTitle.text = it.title
                     binding.tvCocktailIntsructions.text = it.instructions
 
+                    cocktailImageUrl = it.image
+                    cocktailTitle = it.title
                     Glide.with(requireContext())
                         .load(it.image)
                         .centerCrop()
@@ -78,16 +82,32 @@ class DetailsCocktailFragment : Fragment() {
             }
         }
 
+        viewModel.observeStateLikeCocktail(this) {
+            when (it) {
+                is CocktailFavoriteStateResultUI.Success -> {
+                    if (it.isFavorite)
+                        binding.imageViewFavorite.setImageResource(R.drawable.ic_favorite_red)
+                    else
+                        binding.imageViewFavorite.setImageResource(R.drawable.ic_favorite_grey)
+                }
+
+                is CocktailFavoriteStateResultUI.Error -> {
+                    binding.tvCocktailTitle.text = it.message
+                }
+            }
+        }
+
         idCocktail?.let {
             viewModel.fetchDetailsCocktail(it)
         }
-        binding.imageViewLove.setImageResource(R.drawable.ic_favorite_red)
 
-        binding.imageViewLove.setOnClickListener {
-            binding.imageViewLove.setImageResource(R.drawable.ic_favorite_grey)
+        binding.imageViewFavorite.setOnClickListener {
+            idCocktail?.let {
+                viewModel.updateCocktailFavoriteState(it, cocktailTitle, cocktailImageUrl)
+            }
         }
-
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

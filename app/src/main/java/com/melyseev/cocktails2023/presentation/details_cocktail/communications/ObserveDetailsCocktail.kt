@@ -2,6 +2,7 @@ package com.melyseev.cocktails2023.presentation.details_cocktail.communications
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.melyseev.cocktails2023.presentation.details_cocktail.CocktailFavoriteStateResultUI
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailResultUI
 
 
@@ -10,5 +11,9 @@ interface ObserveDetailsCocktail {
     fun observeStateDetailsCocktail(
         owner: LifecycleOwner,
         observer: Observer<DetailsCocktailResultUI>
+    )
+    fun observeStateLikeCocktail(
+        owner: LifecycleOwner,
+        observer: Observer<CocktailFavoriteStateResultUI>
     )
 }

@@ -22,7 +22,7 @@ interface CacheModule {
         override fun provideDataBase(): SubcategoriesDataBase = database
 
         companion object{
-            const val DATABASE_NAME = "cocktails_db"
+            const val DATABASE_NAME = "cocktails_db2"
         }
     }
 }

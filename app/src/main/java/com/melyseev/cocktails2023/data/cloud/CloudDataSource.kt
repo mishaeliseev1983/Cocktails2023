@@ -22,6 +22,7 @@ interface CloudDataSource {
     suspend fun getSubcategoriesByAlcoholic(): ListAlcoholicDto
     suspend fun getDetailsCocktailById(cocktailId: Int): DetailsCocktailDto
 
+
     class Base @Inject constructor(private val service: CocktailsService) : CloudDataSource {
 
         override suspend fun getCocktailsBySubcategory(category: String, subcategory: String): ShortDto {

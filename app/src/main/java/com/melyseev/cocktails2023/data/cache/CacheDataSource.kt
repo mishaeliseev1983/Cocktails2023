@@ -1,26 +1,38 @@
 package com.melyseev.cocktails2023.data.cache
 
 import com.melyseev.cocktails2023.common.*
-import com.melyseev.cocktails2023.data.SubcategoryData
 import com.melyseev.cocktails2023.data.cache.dao.CategoriesDao
+import com.melyseev.cocktails2023.data.cache.dao.FavoritesDao
 import com.melyseev.cocktails2023.data.cache.dao.SubcategoriesDao
 import com.melyseev.cocktails2023.data.cache.entity.CategoryEntity
+import com.melyseev.cocktails2023.data.cache.entity.FavoriteEntity
 import com.melyseev.cocktails2023.data.cache.entity.SubcategoryEntity
 import javax.inject.Inject
 
 interface CacheDataSource {
     suspend fun insertListSubcategories(list: List<SubcategoryEntity>)
-    suspend fun getListSubcategories(idCategory: Long): List<SubcategoryData>
-    suspend fun changeCheckSubcategory(idCategory: Long, subcategory: String, checkValue: Int)
+    suspend fun getListSubcategories(idCategory: Int): List<SubcategoryEntity>
+    suspend fun changeCheckSubcategory(idCategory: Int, subcategory: String, checkValue: Int)
 
     suspend fun getListCategories(): List<CategoryEntity>
 
     suspend fun fillTableCategory()
-    suspend fun getIdCategory(category: String): Long
+    suspend fun getIdCategory(category: String): Int
+
+    suspend fun getAllCocktailFavorites(): List<FavoriteEntity>
+    suspend fun updateAndGetCocktailFavoriteState(cocktailId: Int): FavoriteEntity
+    suspend fun getCocktailFavoriteState(cocktailId: Int): FavoriteEntity
+    suspend fun isSavedCocktailFavoriteState(cocktailId: Int): Boolean
+    suspend fun insertCocktailFavoriteState(
+        cocktailId: Int,
+        cocktailTitle: String,
+        cocktailImage: String
+    )
 
     class Base @Inject constructor(
         val daoCategoriesDao: CategoriesDao,
-        val daoSubcategoriesDao: SubcategoriesDao
+        val daoSubcategoriesDao: SubcategoriesDao,
+        val daoFavoritesDao: FavoritesDao
     ) : CacheDataSource {
         override suspend fun insertListSubcategories(
             list: List<SubcategoryEntity>
@@ -28,14 +40,12 @@ interface CacheDataSource {
             daoSubcategoriesDao.insert(it)
         }
 
-        override suspend fun getListSubcategories(idCategory: Long): List<SubcategoryData> =
-            daoSubcategoriesDao.getAllSubcategories(idCategory = idCategory).map{ subcategoryEntity ->
-                SubcategoryData(subcategoryEntity.subcategoryName, subcategoryEntity.subcategoryChecked==1)
-            }
+        override suspend fun getListSubcategories(idCategory: Int): List<SubcategoryEntity> =
+            daoSubcategoriesDao.getAllSubcategories(idCategory = idCategory)
 
 
         override suspend fun changeCheckSubcategory(
-            idCategory: Long,
+            idCategory: Int,
             subcategory: String,
             checkValue: Int
         ) =
@@ -52,16 +62,58 @@ interface CacheDataSource {
 
         override suspend fun fillTableCategory() {
             if (daoCategoriesDao.getAllCategories().isNotEmpty()) return
-            daoCategoriesDao.insert(CategoryEntity(30, CATEGORY_BY_ALCOHOLIC))
-            daoCategoriesDao.insert(CategoryEntity(31, CATEGORY_BY_CATEGORIES))
-            daoCategoriesDao.insert(CategoryEntity(32, CATEGORY_BY_GLASSES))
-            daoCategoriesDao.insert(CategoryEntity(33, CATEGORY_BY_INGREDIENTS))
-            daoCategoriesDao.insert(CategoryEntity(34, CATEGORY_BY_FAVORITE))
+            daoCategoriesDao.insert(CategoryEntity(1, CATEGORY_BY_ALCOHOLIC))
+            daoCategoriesDao.insert(CategoryEntity(2, CATEGORY_BY_CATEGORIES))
+            daoCategoriesDao.insert(CategoryEntity(3, CATEGORY_BY_GLASSES))
+            daoCategoriesDao.insert(CategoryEntity(4, CATEGORY_BY_INGREDIENTS))
+            daoCategoriesDao.insert(CategoryEntity(5, CATEGORY_BY_FAVORITE))
         }
 
-        override suspend fun getIdCategory(category: String): Long {
+        override suspend fun getIdCategory(category: String): Int {
             val categories = daoCategoriesDao.getAllCategories()
-            return categories.first { it.categoryName == category }.id
+            return categories.firstOrNull { it.categoryName == category }?.id ?: 1
         }
+
+        override suspend fun getAllCocktailFavorites(): List<FavoriteEntity> {
+            return daoFavoritesDao.getListFavorite()
+        }
+
+        override suspend fun updateAndGetCocktailFavoriteState(cocktailId: Int): FavoriteEntity {
+            val favoriteEntity = daoFavoritesDao.searchById(cocktailId = cocktailId)
+            favoriteEntity?.let {
+                if (it.like == 0) it.like = 1
+                else
+                    it.like = 0
+                daoFavoritesDao.update(it)
+                return it
+            }
+            return FavoriteEntity.Empty
+        }
+
+        override suspend fun getCocktailFavoriteState(cocktailId: Int): FavoriteEntity{
+            var favoriteEntity = daoFavoritesDao.searchById(cocktailId = cocktailId)
+            if(favoriteEntity == null)
+                favoriteEntity= FavoriteEntity.Empty
+           return favoriteEntity
+        }
+
+        override suspend fun isSavedCocktailFavoriteState(cocktailId: Int) =
+            daoFavoritesDao.searchById(cocktailId) != null
+
+        override suspend fun insertCocktailFavoriteState(
+            cocktailId: Int,
+            cocktailTitle: String,
+            cocktailImage: String
+        ) {
+            daoFavoritesDao.insert(
+                FavoriteEntity(
+                    cocktailId = cocktailId,
+                    cocktailTitle = cocktailTitle,
+                    cocktailImage = cocktailImage
+                )
+            )
+        }
+
+
     }
 }

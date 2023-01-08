@@ -57,6 +57,11 @@ interface ViewModelDependencies {
     @Binds
     fun provideStateDetailsCocktailStateCommunication(param: Communications.DetailsCocktailStateCommunication.Base): Communications.DetailsCocktailStateCommunication
 
+    @Binds
+    fun provideStateLikeStateCommunictaion(param: Communications.LikeStateCommunictaion.Base): Communications.LikeStateCommunictaion
+
+
+
     @ApplicationScope
     @Binds
     fun provideInteractor(param: CocktailsInteractor.Base): CocktailsInteractor

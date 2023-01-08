@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.details_cocktail.CocktailFavoriteStateResultUI
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import javax.inject.Inject
@@ -78,6 +79,10 @@ interface Communications {
 
     interface DetailsCocktailStateCommunication: Mutable<DetailsCocktailResultUI> {
         class Base @Inject constructor(): DetailsCocktailStateCommunication, Post<DetailsCocktailResultUI>()
+    }
+
+    interface LikeStateCommunictaion: Mutable<CocktailFavoriteStateResultUI> {
+        class Base @Inject constructor(): LikeStateCommunictaion, Post<CocktailFavoriteStateResultUI>()
     }
 
     /*

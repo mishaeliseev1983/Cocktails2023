@@ -10,30 +10,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ProgressBar>
-
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="match_parent">
+
+
         <ImageView
             android:id="@+id/imageView"
+            android:contentDescription="@string/cocktail_image"
             android:scaleType="centerInside"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/loading"></ImageView>
-
+            android:src="@drawable/loading"/>
 
         <ImageView
-            android:id="@+id/imageViewLove"
+            android:id="@+id/imageViewFavorite"
+            android:contentDescription="@string/cocktail_like"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_favorite_red"></ImageView>
+            android:src="@drawable/ic_favorite_grey"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </FrameLayout>
 

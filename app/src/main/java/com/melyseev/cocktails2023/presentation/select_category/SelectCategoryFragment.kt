@@ -53,7 +53,7 @@ class SelectCategoryFragment : Fragment() {
         }
         val listCheckedBox = listOf(
             binding.checkboxCategories, binding.checkboxAlcoholic,
-            binding.checkboxGlasses, binding.checkboxIngredients
+            binding.checkboxGlasses, binding.checkboxIngredients, binding.checkboxFavorites
         )
 
         listCheckedBox.forEach { checkBox ->

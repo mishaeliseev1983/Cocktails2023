@@ -2,12 +2,15 @@ package com.melyseev.cocktails2023.data
 
 import com.melyseev.cocktails2023.common.*
 import com.melyseev.cocktails2023.data.cache.CacheDataSource
+import com.melyseev.cocktails2023.data.cache.entity.FavoriteEntity
 import com.melyseev.cocktails2023.data.cache.entity.SubcategoryEntity
 import com.melyseev.cocktails2023.data.cloud.CloudDataSource
+import com.melyseev.cocktails2023.data.details_cocktail.DetailsCocktailDto
 import com.melyseev.cocktails2023.data.list_category.MapDrinkToDomain
-import com.melyseev.cocktails2023.data.short_cocktail.Drink
+import com.melyseev.cocktails2023.data.short_cocktail.ShortDto
 import com.melyseev.cocktails2023.domain.main.CocktailsRepository
 import com.melyseev.cocktails2023.domain.main.details_cocktail.DetailsCocktailDomain
+import com.melyseev.cocktails2023.domain.main.details_cocktail.FavoriteStateCocktailDomain
 import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 import java.net.UnknownHostException
@@ -16,38 +19,48 @@ import javax.inject.Inject
 class CocktailsRepositoryImpl @Inject constructor(
     private val cloudDataSource: CloudDataSource,
     private val cacheDataSource: CacheDataSource,
-    private val mapperToSubcategoryDomain: MapDrinkToDomain.Mapper<SubcategoryDomain>,
-    private val mapperToSubcategoryData: MapDrinkToDomain.Mapper<SubcategoryData>,
+    private val mapperDetailsCocktailDtoToDomain: DetailsCocktailDto.Mapper<DetailsCocktailDomain>,
+    private val mapperSubcategoryDataToSubcategoryDomain: SubcategoryData.Mapper<SubcategoryDomain>,
+    private val mapperListCategoriesDtoToSubcategoryData: MapDrinkToDomain.Mapper<SubcategoryData>,
+    private val mapperSubcategoryEntityToSubcategoryData: SubcategoryEntity.Mapper<SubcategoryData>,
+    private val mapperFavoriteEntityToCocktailShortDomain: FavoriteEntity.Mapper<CocktailShortDomain>,
+    private val mapperShortDtoToListCocktailShortDomain: ShortDto.Mapper<List<CocktailShortDomain>>,
+    private val mapperFavoriteEntityToFavoriteStateCocktailDomain: FavoriteEntity.Mapper<FavoriteStateCocktailDomain>,
     private val handleErrorToDomainException: HandleErrorToDomainException
 ) :
     CocktailsRepository {
 
     override suspend fun fetchListSubcategories(category: String): List<SubcategoryDomain> {
+        if (category == CATEGORY_BY_FAVORITE) return emptyList()
         try {
+
             //1. create table if not
             cacheDataSource.fillTableCategory()
 
             //2. get db data
             val idCategory = cacheDataSource.getIdCategory(category)
-            var listSubcategoryData =
-                cacheDataSource.getListSubcategories(idCategory = idCategory)
 
+
+            var listSubcategoryData =
+                cacheDataSource.getListSubcategories(idCategory = idCategory).map {
+                    it.mapToData(mapperSubcategoryEntityToSubcategoryData)
+                }
 
             if (listSubcategoryData.isEmpty()) {
 
                 //get internet data
                 listSubcategoryData = when (category.first().lowercase()) {
                     BEGIN_C -> cloudDataSource.getSubcategoriesByCategory().drinks.map {
-                        mapperToSubcategoryData.map(it.strCategory)
+                        mapperListCategoriesDtoToSubcategoryData.map(it.strCategory)
                     }
                     BEGIN_A -> cloudDataSource.getSubcategoriesByAlcoholic().drinks.map {
-                        mapperToSubcategoryData.map(it.strAlcoholic)
+                        mapperListCategoriesDtoToSubcategoryData.map(it.strAlcoholic)
                     }
                     BEGIN_I -> cloudDataSource.getSubcategoriesByIngredient().drinks.map {
-                        mapperToSubcategoryData.map(it.strIngredient1)
+                        mapperListCategoriesDtoToSubcategoryData.map(it.strIngredient1)
                     }
                     BEGIN_G -> cloudDataSource.getSubcategoriesByGlass().drinks.map {
-                        mapperToSubcategoryData.map(it.strGlass)
+                        mapperListCategoriesDtoToSubcategoryData.map(it.strGlass)
                     }
                     else -> throw UnknownHostException()
                 }
@@ -57,6 +70,7 @@ class CocktailsRepositoryImpl @Inject constructor(
                     SubcategoryData(subcategoryData.name, index < 3)
                 }
                 //save db
+
                 val listEntities = listSubcategoryData.map { subcategoryData ->
                     SubcategoryEntity(
                         idCategory = idCategory,
@@ -70,11 +84,9 @@ class CocktailsRepositoryImpl @Inject constructor(
             }
 
             return listSubcategoryData.map {
-                SubcategoryDomain(
-                    title = it.name,
-                    isSelected = it.checked
-                )
+                it.mapToDomain(mapperSubcategoryDataToSubcategoryDomain)
             }
+
         } catch (e: Exception) {
             throw  handleErrorToDomainException.handle(e)
         }
@@ -85,30 +97,22 @@ class CocktailsRepositoryImpl @Inject constructor(
         category: String,
         subcategory: String
     ): List<CocktailShortDomain> {
-        if (subcategory.isEmpty()) return emptyList()
 
+
+        //favorites - only in db
+        if (category == CATEGORY_BY_FAVORITE) {
+            val listFavorites = cacheDataSource.getAllCocktailFavorites()
+            return listFavorites.map {
+                it.mapToDomain(mapperFavoriteEntityToCocktailShortDomain)
+            }
+        }
+        if (subcategory.isEmpty()) return emptyList()
         try {
             val shortDto = cloudDataSource.getCocktailsBySubcategory(
                 category = category,
                 subcategory = subcategory
             )
-            val resultListCocktailDomain = shortDto.drinks.map {
-                it.mapToDomain(object : Drink.Mapper<CocktailShortDomain> {
-                    override fun map(
-                        idDrink: String,
-                        strDrink: String,
-                        strDrinkThumb: String
-                    ): CocktailShortDomain {
-                        return CocktailShortDomain(
-                            id = idDrink.toInt(),
-                            title = strDrink,
-                            urlImage = strDrinkThumb
-                        )
-                    }
-                })
-            }
-
-            return resultListCocktailDomain
+            return shortDto.map(mapperShortDtoToListCocktailShortDomain)
         } catch (e: Exception) {
             throw  handleErrorToDomainException.handle(e)
         }
@@ -123,21 +127,45 @@ class CocktailsRepositoryImpl @Inject constructor(
         cacheDataSource.changeCheckSubcategory(
             idCategory = idCategory,
             subcategory = subcategory,
-            isSelected.toInt()
+            checkValue = isSelected.toInt()
         )
     }
 
     override suspend fun getDetailsCocktailById(cocktailId: Int): DetailsCocktailDomain {
         try {
             val listData = cloudDataSource.getDetailsCocktailById(cocktailId = cocktailId)
-            val drink = listData.drinks[0]
-            return DetailsCocktailDomain(
-                title = drink.strDrink ?: "",
-                image = drink.strDrinkThumb?:"",
-                ingredients = emptyList(),
-                instructions = drink.strInstructions ?: ""
-            )
-        }catch (e: Exception) {
+            return listData.map(mapperDetailsCocktailDtoToDomain)
+        } catch (e: Exception) {
+            throw  handleErrorToDomainException.handle(e)
+        }
+    }
+
+    override suspend fun getUpdatedCocktailFavoriteState(
+        cocktailId: Int,
+        cocktailTitle: String,
+        cocktailImage: String
+    ): FavoriteStateCocktailDomain {
+        try {
+
+            if (!cacheDataSource.isSavedCocktailFavoriteState(cocktailId = cocktailId)) {
+                cacheDataSource.insertCocktailFavoriteState(
+                    cocktailId,
+                    cocktailTitle,
+                    cocktailImage
+                )
+            }
+            val favoriteEntity = cacheDataSource.updateAndGetCocktailFavoriteState(cocktailId)
+            return favoriteEntity.mapToDomain(mapperFavoriteEntityToFavoriteStateCocktailDomain)
+        } catch (e: Exception) {
+            throw  handleErrorToDomainException.handle(e)
+        }
+    }
+
+    override suspend fun getCocktailFavoriteState(cocktailId: Int): FavoriteStateCocktailDomain {
+        try {
+            val favoriteEntity = cacheDataSource.getCocktailFavoriteState(cocktailId)
+            return favoriteEntity.mapToDomain(mapperFavoriteEntityToFavoriteStateCocktailDomain)
+        } catch (e: Exception) {
             throw  handleErrorToDomainException.handle(e)
         }
     }

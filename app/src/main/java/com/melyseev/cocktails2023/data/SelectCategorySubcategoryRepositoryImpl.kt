@@ -10,7 +10,11 @@ class SelectCategorySubcategoryRepositoryImpl
     override fun changeCategory(category: String) {
        sharedPreferences.changeCategory(category)
     }
-    override fun getCategory(): String  = sharedPreferences.getCategory()
+    override fun getCategory(): String  {
+        val category = sharedPreferences.getCategory()
+        println(category)
+        return category
+    }
 
     override fun changeSubcategory(subcategory: String) {
         sharedPreferences.changeSubcategory(subcategory)
