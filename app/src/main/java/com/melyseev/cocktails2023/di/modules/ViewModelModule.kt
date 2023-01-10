@@ -19,12 +19,10 @@ interface ViewModelModule {
     @Binds
     fun bindCocktailsListViewModel(impl: CocktailsListViewModel): ViewModel
 
-
     @IntoMap
     @ViewModelKey(SelectCategoryViewModel::class)
     @Binds
     fun bindSelectCategoryViewModel(impl: SelectCategoryViewModel): ViewModel
-
 
     @IntoMap
     @ViewModelKey(SelectSubcategoryViewModel::class)
@@ -40,6 +38,4 @@ interface ViewModelModule {
     @ViewModelKey(MainViewModel::class)
     @Binds
     fun bindMainViewModel(impl: MainViewModel): ViewModel
-
-
 }

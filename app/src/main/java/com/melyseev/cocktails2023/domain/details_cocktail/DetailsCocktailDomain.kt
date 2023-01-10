@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.domain.main.details_cocktail
+package com.melyseev.cocktails2023.domain.details_cocktail
 
 class DetailsCocktailDomain(
     val title: String,
@@ -13,7 +13,7 @@ class DetailsCocktailDomain(
     }
 
     companion object{
-        fun Empty(): DetailsCocktailDomain{
+        fun Empty(): DetailsCocktailDomain {
             return DetailsCocktailDomain("","", emptyList(), "")
         }
     }

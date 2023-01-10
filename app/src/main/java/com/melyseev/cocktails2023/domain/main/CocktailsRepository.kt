@@ -1,7 +1,7 @@
 package com.melyseev.cocktails2023.domain.main
 
-import com.melyseev.cocktails2023.domain.main.details_cocktail.DetailsCocktailDomain
-import com.melyseev.cocktails2023.domain.main.details_cocktail.FavoriteStateCocktailDomain
+import com.melyseev.cocktails2023.domain.details_cocktail.DetailsCocktailDomain
+import com.melyseev.cocktails2023.domain.details_cocktail.FavoriteStateCocktailDomain
 import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
 

@@ -3,8 +3,8 @@ package com.melyseev.cocktails2023.domain.main
 import com.melyseev.cocktails2023.domain.DomainException
 import com.melyseev.cocktails2023.domain.HandleDomainExceptionToString
 import com.melyseev.cocktails2023.domain.SelectCategorySubcategoryRepository
-import com.melyseev.cocktails2023.domain.main.details_cocktail.ResultCocktailFavoriteState
-import com.melyseev.cocktails2023.domain.main.details_cocktail.ResultDetailsCocktail
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultCocktailFavoriteState
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultDetailsCocktail
 import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import javax.inject.Inject

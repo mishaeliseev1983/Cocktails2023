@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.domain.main.details_cocktail
+package com.melyseev.cocktails2023.domain.details_cocktail
 
 sealed class ResultDetailsCocktail {
 

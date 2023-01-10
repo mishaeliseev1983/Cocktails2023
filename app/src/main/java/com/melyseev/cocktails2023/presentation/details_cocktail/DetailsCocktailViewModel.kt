@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.main.details_cocktail.DetailsCocktailDomain
-import com.melyseev.cocktails2023.domain.main.details_cocktail.ResultCocktailFavoriteState
-import com.melyseev.cocktails2023.domain.main.details_cocktail.ResultDetailsCocktail
+import com.melyseev.cocktails2023.domain.details_cocktail.DetailsCocktailDomain
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultCocktailFavoriteState
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultDetailsCocktail
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailCommunications
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.ObserveDetailsCocktail
 import com.melyseev.cocktails2023.presentation.main.DispatchersList

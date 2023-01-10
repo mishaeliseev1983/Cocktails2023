@@ -69,7 +69,7 @@ class SelectCategoryFragment : Fragment() {
         listCheckedBox.forEach { checkBox ->
             val selectedCategory = checkBox.text.toString()
             checkBox.setOnClickListener {
-                viewModel.fetchSelectedCategory2(selectedCategory)
+                viewModel.fetchSelectedCategory(selectedCategory)
             }
         }
 
