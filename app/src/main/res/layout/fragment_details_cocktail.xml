@@ -8,48 +8,62 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+
         android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:contentDescription="@string/cocktail_image"
-            android:scaleType="centerInside"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageViewFavorite"
-            android:contentDescription="@string/cocktail_like"
-            android:layout_width="50dp"
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:contentDescription="@string/cocktail_image"
+                android:scaleType="centerInside" />
+
+            <ImageView
+                android:id="@+id/imageViewFavorite"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/cocktail_like"
+                android:src="@drawable/ic_favorite_grey" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_cocktail_title"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_favorite_grey"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            tools:text="@string/title_cocktail" />
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:visibility="visible"
+        <TextView
+            android:id="@+id/tv_cocktail_intsructions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            tools:text="@string/instructions" />
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/btn_back_to_cocktails"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="5dp"
+            android:text="@string/back_cocktails" />
 
-    <TextView
-        android:id="@+id/tv_cocktail_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        tools:text="@string/title_cocktail"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-    <TextView
-        android:id="@+id/tv_cocktail_intsructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="@string/instructions"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
     </LinearLayout>
+
 </ScrollView>

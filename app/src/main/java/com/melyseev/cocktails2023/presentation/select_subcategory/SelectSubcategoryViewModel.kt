@@ -8,19 +8,23 @@ import androidx.lifecycle.viewModelScope
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
-import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.activity.FetchNavigation
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
 import com.melyseev.cocktails2023.presentation.main.communications.ObserveSubcategories
 import com.melyseev.cocktails2023.presentation.main.communications.SubcategoriesCommunications
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SelectSubcategoryViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
     private val communications: SubcategoriesCommunications,
+    private val navigationCommunication: NavigationCommunication,
     private val interactor: CocktailsInteractor
-) : ViewModel(), ObserveSubcategories, FetchSubcategoryList {
+) : ViewModel(), ObserveSubcategories, FetchSubcategoryList, FetchNavigation {
 
 
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
@@ -93,5 +97,10 @@ class SelectSubcategoryViewModel @Inject constructor(
             communications.showProgress(View.GONE)
         }
     }
+
+    override fun navigate(navigationStrategy: NavigationStrategy) {
+        navigationCommunication.change(navigationStrategy)
+    }
+
 
 }

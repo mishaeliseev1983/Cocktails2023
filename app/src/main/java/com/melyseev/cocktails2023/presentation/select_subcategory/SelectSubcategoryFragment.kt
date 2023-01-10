@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melyseev.cocktails2023.databinding.FragmentSelectSubcategoryBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
 import com.melyseev.cocktails2023.presentation.select_subcategory.recyclerview.SubcategoriesListAdapter
 import javax.inject.Inject
@@ -76,6 +77,9 @@ class SelectSubcategoryFragment : Fragment() {
             }
         }
 
+        binding.btnBackCategories.setOnClickListener {
+            viewModel.navigate(NavigationStrategy.Back)
+        }
 
     }
 

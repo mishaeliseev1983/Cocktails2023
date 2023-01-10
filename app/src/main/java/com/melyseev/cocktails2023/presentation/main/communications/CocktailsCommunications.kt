@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.common.Communications
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
-import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
 import javax.inject.Inject
 
 interface CocktailsCommunications : ObserveCocktails {

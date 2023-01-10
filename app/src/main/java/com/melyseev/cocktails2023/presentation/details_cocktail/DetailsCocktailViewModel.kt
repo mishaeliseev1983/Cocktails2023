@@ -9,6 +9,9 @@ import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.details_cocktail.DetailsCocktailDomain
 import com.melyseev.cocktails2023.domain.details_cocktail.ResultCocktailFavoriteState
 import com.melyseev.cocktails2023.domain.details_cocktail.ResultDetailsCocktail
+import com.melyseev.cocktails2023.presentation.activity.FetchNavigation
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailCommunications
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.ObserveDetailsCocktail
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
@@ -17,11 +20,11 @@ import javax.inject.Inject
 
 class DetailsCocktailViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
-    //private val mapperDomainToUI: DetailsCocktailDomain.Mapper<DetailsCocktailResultUI>,
     private val communications: DetailsCocktailCommunications,
+    private val navigationCommunication: NavigationCommunication,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
-    ObserveDetailsCocktail, FetchDetailsCocktail {
+    ObserveDetailsCocktail, FetchDetailsCocktail, FetchNavigation {
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
         communications.observeProgress(owner, observer)
     }
@@ -75,9 +78,6 @@ class DetailsCocktailViewModel @Inject constructor(
                 }
             })
             communications.showDetailsCocktailState(resultDetailsCocktailUI)
-
-
-
             communications.showProgress(View.GONE)
         }
     }
@@ -104,6 +104,10 @@ class DetailsCocktailViewModel @Inject constructor(
             communications.showLike(resulUI)
             communications.showProgress(View.GONE)
         }
+    }
+
+    override fun navigate(navigationStrategy: NavigationStrategy) {
+        navigationCommunication.change(NavigationStrategy.Back)
     }
 
 }

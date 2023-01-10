@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melyseev.cocktails2023.databinding.FragmentCocktailsListBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailFragment
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI

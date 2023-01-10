@@ -7,16 +7,22 @@ interface NavigationStrategy {
 
     fun startTransaction(supportFragmentManager: FragmentManager, containerId: Int)
 
-    class Replace(val fragment: Fragment) : NavigationStrategy {
+    class Replace(private val fragment: Fragment) : NavigationStrategy {
         override fun startTransaction(supportFragmentManager: FragmentManager, containerId: Int) {
             supportFragmentManager.beginTransaction().replace(containerId, fragment)
                 .addToBackStack(fragment.javaClass.canonicalName).commit()
         }
     }
 
-    class Add(val fragment: Fragment) : NavigationStrategy {
+    class Add(private val fragment: Fragment) : NavigationStrategy {
         override fun startTransaction(supportFragmentManager: FragmentManager, containerId: Int) {
             supportFragmentManager.beginTransaction().add(containerId, fragment).commit()
+        }
+    }
+
+    object Back : NavigationStrategy {
+        override fun startTransaction(supportFragmentManager: FragmentManager, containerId: Int) {
+            supportFragmentManager.popBackStack()
         }
     }
 }

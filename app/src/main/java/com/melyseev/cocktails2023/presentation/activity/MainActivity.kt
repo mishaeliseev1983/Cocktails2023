@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager,
                     R.id.container
                 )
+
+                NavigationStrategy.Back -> it.startTransaction(
+                    supportFragmentManager,
+                    R.id.container
+                )
             }
         }
 

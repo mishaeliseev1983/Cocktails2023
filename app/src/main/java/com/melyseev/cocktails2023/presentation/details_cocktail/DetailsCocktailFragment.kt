@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.databinding.FragmentDetailsCocktailBinding
 import com.melyseev.cocktails2023.presentation.App
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
 import javax.inject.Inject
 
@@ -105,6 +106,10 @@ class DetailsCocktailFragment : Fragment() {
             idCocktail?.let {
                 viewModel.updateCocktailFavoriteState(it, cocktailTitle, cocktailImageUrl)
             }
+        }
+
+        binding.btnBackToCocktails.setOnClickListener {
+            viewModel.navigate(NavigationStrategy.Back)
         }
     }
 

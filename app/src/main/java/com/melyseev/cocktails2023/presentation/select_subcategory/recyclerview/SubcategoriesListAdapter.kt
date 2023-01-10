@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.common.Communications
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
 
 
 class SubcategoriesListAdapter(val onCheckedSubcategory: (SubcategoryUI, Boolean) -> Unit) :

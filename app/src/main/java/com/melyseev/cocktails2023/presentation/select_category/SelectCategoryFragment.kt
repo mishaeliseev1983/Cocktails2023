@@ -48,6 +48,10 @@ class SelectCategoryFragment : Fragment() {
             val fragment = SelectSubcategoryFragment.newInstance()
             viewModel.change(NavigationStrategy.Replace(fragment))
         }
+
+        binding.btnBackToCocktails.setOnClickListener {
+            viewModel.change(NavigationStrategy.Back)
+        }
         val listCheckedBox = listOf(
             binding.checkboxCategories, binding.checkboxAlcoholic,
             binding.checkboxGlasses, binding.checkboxIngredients, binding.checkboxFavorites

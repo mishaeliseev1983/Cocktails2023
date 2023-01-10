@@ -15,8 +15,8 @@ import com.melyseev.cocktails2023.presentation.main.communications.CocktailsComm
 import com.melyseev.cocktails2023.presentation.main.communications.ObserveCocktails
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
-import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
 import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
