@@ -4,7 +4,7 @@ sealed class ResultCocktail {
 
     abstract fun <T> map(mapper: Mapper<T>): T
     interface Mapper<T> {
-        fun mapToUi(cocktailDomainDomain: List<CocktailShortDomain>, message: String): T
+        fun mapToUi(cocktailShortDomain: List<CocktailShortDomain>, message: String): T
     }
 
     data class Success(val listCocktails: List<CocktailShortDomain>) : ResultCocktail() {
