@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     tools:context=".presentation.select_subcategory.SelectSubcategoryFragment">
 
     <ProgressBar
@@ -18,12 +18,12 @@
     <TextView
         android:id="@+id/tv_select_subcategory"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:layout_gravity="top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:text="@string/select_subcategories">
     </TextView>
 
@@ -39,7 +39,6 @@
         android:id="@+id/btn_back_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:text="@string/back_categories"
         app:layout_constraintBottom_toBottomOf="parent"
         />

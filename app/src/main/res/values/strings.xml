@@ -17,4 +17,5 @@
     <string name="cocktail_image">Cocktail image</string>
     <string name="cocktail_like">Check if like it</string>
     <string name="choose_like">"Choose other category. Select cocktail. Push heart."</string>
+    <string name="no_subcategories">No subcategories</string>
 </resources>

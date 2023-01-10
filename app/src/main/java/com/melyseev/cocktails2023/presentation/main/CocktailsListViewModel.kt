@@ -11,15 +11,15 @@ import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
 import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
 import com.melyseev.cocktails2023.presentation.main.communications.ObserveCocktails
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
 import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
-import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
-import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
-import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,18 +49,24 @@ class CocktailsListViewModel @Inject constructor(
             ): SubcategoryResultUI =
                 if (message.isEmpty()) {
 
+
                     //no subcategory
-                    if (interactor.getSubcategory()
-                            .isEmpty() && listSubcategoryDomain.isNotEmpty()
-                    ) {
-                        interactor.changeSubcategory(listSubcategoryDomain[0].title)
-                    }
-                    val listSubcategoryUI = listSubcategoryDomain.map {
-                        SubcategoryUI(
-                            title = it.title,
-                            isSelected = (it.title == interactor.getSubcategory())
-                        )
-                    }
+                    //if (interactor.getSubcategory().isEmpty() && listSubcategoryDomain.isEmpty()) {
+                    //    listSubcategoryUI = listOf(SubcategoryUIEmpty)
+                    //} else {
+                        if (interactor.getSubcategory()
+                                .isEmpty() && listSubcategoryDomain.isNotEmpty()
+                        ) {
+                            interactor.changeSubcategory(listSubcategoryDomain[0].title)
+                        }
+                        val listSubcategoryUI = listSubcategoryDomain.map {
+                            SubcategoryUI(
+                                title = it.title,
+                                isSelected = (it.title == interactor.getSubcategory())
+                            )
+                        }
+
+
                     SubcategoryResultUI.Success(listSubcategoryUI)
                 } else {
                     SubcategoryResultUI.Failure(message = message)
@@ -79,14 +85,14 @@ class CocktailsListViewModel @Inject constructor(
 
         val resultUI = result.map(object : ResultCocktail.Mapper<CocktailResultUI> {
             override fun mapToUi(
-                cocktailDomainDomain: List<CocktailShortDomain>,
+                cocktailShortDomain: List<CocktailShortDomain>,
                 message: String
             ): CocktailResultUI =
                 if (message.isEmpty()) {
-                    if (cocktailDomainDomain.isEmpty())
+                    if (cocktailShortDomain.isEmpty())
                         CocktailResultUI.Success(list = listOf(CocktailUIEmpty))
                     else
-                        CocktailResultUI.Success(list = cocktailDomainDomain.map {
+                        CocktailResultUI.Success(list = cocktailShortDomain.map {
                             CocktailUI(it.id, it.title, it.urlImage)
                         })
                 } else

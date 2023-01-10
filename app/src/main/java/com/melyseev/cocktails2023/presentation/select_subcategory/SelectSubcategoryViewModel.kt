@@ -16,6 +16,7 @@ import com.melyseev.cocktails2023.presentation.main.communications.ObserveSubcat
 import com.melyseev.cocktails2023.presentation.main.communications.SubcategoriesCommunications
 import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.select_subcategory_ui_objects.SubcategoryUIEmpty
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,7 +50,7 @@ class SelectSubcategoryViewModel @Inject constructor(
                 ): SubcategoryResultUI =
                     if (message.isEmpty()) {
                         if (listSubcategoryDomain.isEmpty())
-                            SubcategoryResultUI.Success(listOf(SubcategoryUI("", false)))
+                            SubcategoryResultUI.Success(listOf(SubcategoryUIEmpty))
                         else
                             SubcategoryResultUI.Success(listSubcategoryDomain.map {
                                 SubcategoryUI(

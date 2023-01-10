@@ -10,7 +10,7 @@ import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
 
 
-class CocktailsListAdapter(val onSelectCocktail: (idCocktail: Int) -> Unit) :
+class CocktailsListAdapter(private val onSelectCocktail: (idCocktail: Int) -> Unit) :
     ListAdapter<CocktailUI, CocktailViewHolder>(CocktailItemDiffCallback()),
     Communications.Change<Unit, List<CocktailUI>> {
 

@@ -111,6 +111,7 @@ class DetailsCocktailFragment : Fragment() {
         binding.btnBackToCocktails.setOnClickListener {
             viewModel.navigate(NavigationStrategy.Back)
         }
+
     }
 
 
