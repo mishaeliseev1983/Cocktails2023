@@ -14,8 +14,8 @@ interface DetailsCocktailCommunications : ObserveDetailsCocktail {
 
     class Base @Inject constructor(
         private val progress: Communications.ProgressCommunication,
-        private val detailsCocktailStateCommunication: Communications.DetailsCocktailStateCommunication,
-        private val likeStateCommunication: Communications.LikeStateCommunictaion,
+        private val detailsCocktailStateCommunication: DetailsCocktailStateCommunication,
+        private val likeStateCommunication: LikeStateCommunication,
         ): DetailsCocktailCommunications{
         override fun showProgress(value: Int) {
             progress.change(value)

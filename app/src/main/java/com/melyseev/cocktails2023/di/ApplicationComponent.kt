@@ -12,9 +12,15 @@ import dagger.Component
 
 @ApplicationScope
 @Component(
-    modules = [AppModule::class, ViewModelModule::class,
-        ViewModelDependencies::class, RetrofitModule::class,
-        SharedPreferencesModule::class, DataBaseModule::class, MappersModules::class]
+    modules = [
+        AppModule::class,
+        ViewModelModule::class,
+        ViewModelDependenciesModule::class,
+        RetrofitModule::class,
+        SharedPreferencesModule::class,
+        DataBaseModule::class,
+        MappersModules::class,
+        CommunicationsModule::class]
 )
 interface ApplicationComponent {
 
@@ -23,6 +29,7 @@ interface ApplicationComponent {
     fun inject(fragment: SelectCategoryFragment)
     fun inject(fragment: SelectSubcategoryFragment)
     fun inject(fragment: DetailsCocktailFragment)
+
     @Component.Factory
     interface AppCompFactory {
         fun create(

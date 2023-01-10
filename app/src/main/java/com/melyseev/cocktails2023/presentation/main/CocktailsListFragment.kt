@@ -1,6 +1,5 @@
 package com.melyseev.cocktails2023.presentation.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melyseev.cocktails2023.databinding.FragmentCocktailsListBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.activity.ShowFragment
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailFragment
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.recyclerview.CocktailsListAdapter
@@ -26,7 +25,6 @@ class CocktailsListFragment : Fragment() {
     private var _binding: FragmentCocktailsListBinding? = null
     private val binding: FragmentCocktailsListBinding
         get() = _binding ?: throw RuntimeException("Object FragmentCocktailsListBinding is null")
-    var showFragment: ShowFragment? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModuleFactory
@@ -39,15 +37,6 @@ class CocktailsListFragment : Fragment() {
         (requireActivity().application as App).component
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        showFragment = context as ShowFragment
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        showFragment = null
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +55,8 @@ class CocktailsListFragment : Fragment() {
 
         binding.imageButton.setOnClickListener {
             val fragment = SelectCategoryFragment.newInstance()
-            showFragment?.show(fragment, add = false)
+            val navigationStrategy = NavigationStrategy.Replace(fragment)
+            viewModel.change(navigationStrategy)
         }
 
         val subcategoryUIClick = object : SubcategoryUIClick {
@@ -82,7 +72,8 @@ class CocktailsListFragment : Fragment() {
 
         val cocktailListAdapter = CocktailsListAdapter {
             val fragment = DetailsCocktailFragment.newInstance(it)
-            showFragment?.show(fragment, add = false)
+            val navigationStrategy = NavigationStrategy.Replace(fragment)
+            viewModel.change(navigationStrategy)
         }
         binding.recyclerViewCocktails.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

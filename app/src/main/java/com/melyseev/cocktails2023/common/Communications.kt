@@ -4,8 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
-import com.melyseev.cocktails2023.presentation.details_cocktail.CocktailFavoriteStateResultUI
-import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
 import javax.inject.Inject
 
@@ -15,17 +13,16 @@ interface Communications {
         fun map(source: S): R
     }
 
-   // interface Change<S> : Mapper<Unit, S>
-   // interface Mutable<T> : Observe<T>, Change<T>
+    // interface Change<S> : Mapper<Unit, S>
+    // interface Mutable<T> : Observe<T>, Change<T>
 
-    interface Change<Unit,S> {
-        fun change(source: S) : Unit
+    interface Change<Unit, S> {
+        fun change(source: S): Unit
     }
 
     interface Observe<T> {
         fun observe(owner: LifecycleOwner, observer: Observer<T>)
     }
-
 
 
     interface Mutable<T> : Observe<T>, Change<Unit, T>
@@ -36,61 +33,37 @@ interface Communications {
         }
     }
 
-    abstract class Ui<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
-        override fun change(source: T) {
-            liveData.value = source!!
-        }
-    }
-
-    abstract class Post<T>(liveData: MutableLiveData<T> = MutableLiveData()) : Abstract<T>(liveData) {
+    abstract class Post<T>(liveData: MutableLiveData<T> = MutableLiveData()) :
+        Abstract<T>(liveData) {
         override fun change(source: T) {
             source.let {
                 liveData.postValue(it)
             }
         }
     }
-
-
-    abstract class SingleUi<T> : Ui<T>(SingleLiveEvent())
     abstract class SinglePost<T> : Post<T>(SingleLiveEvent())
 
     interface ProgressCommunication : Mutable<Int> {
-        class Base @Inject constructor(): ProgressCommunication, Post<Int>()
+        class Base @Inject constructor() : ProgressCommunication, Post<Int>()
     }
 
     interface SubcategoryListStateCommunication : Mutable<SubcategoryResultUI> {
-        class Base  @Inject constructor():  SubcategoryListStateCommunication,
+        class Base @Inject constructor() : SubcategoryListStateCommunication,
             Post<SubcategoryResultUI>()
     }
 
     interface CocktailListStateCommunication : Mutable<CocktailResultUI> {
-        class Base  @Inject constructor():  CocktailListStateCommunication,
+        class Base @Inject constructor() : CocktailListStateCommunication,
             Post<CocktailResultUI>()
     }
 
     interface CategoryNameStateCommunication : Mutable<String> {
-        class Base  @Inject constructor():  CategoryNameStateCommunication,
+        class Base @Inject constructor() : CategoryNameStateCommunication,
             Post<String>()
     }
 
-    interface SelectedCategoryCommunication: Mutable<String> {
-        class Base @Inject constructor(): SelectedCategoryCommunication, Post<String>()
+    interface SelectedCategoryCommunication : Mutable<String> {
+        class Base @Inject constructor() : SelectedCategoryCommunication, Post<String>()
     }
-
-    interface DetailsCocktailStateCommunication: Mutable<DetailsCocktailResultUI> {
-        class Base @Inject constructor(): DetailsCocktailStateCommunication, Post<DetailsCocktailResultUI>()
-    }
-
-    interface LikeStateCommunictaion: Mutable<CocktailFavoriteStateResultUI> {
-        class Base @Inject constructor(): LikeStateCommunictaion, Post<CocktailFavoriteStateResultUI>()
-    }
-
-    /*
-    interface SubcategorySelectedListStateCommunication : Mutable<SubcategoryResultUI> {
-        class Base  @Inject constructor():  SubcategorySelectedListStateCommunication,
-            Post<SubcategoryResultUI>()
-    }
-
-     */
 
 }

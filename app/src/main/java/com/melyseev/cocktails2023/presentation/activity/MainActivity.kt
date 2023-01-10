@@ -2,17 +2,14 @@ package com.melyseev.cocktails2023.presentation.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.presentation.App
 import com.melyseev.cocktails2023.presentation.main.CocktailsListFragment
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), ShowFragment {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModuleFactory
@@ -31,21 +28,21 @@ class MainActivity : AppCompatActivity(), ShowFragment {
 
         daggerApplicationComponent.inject(this)
         if (savedInstanceState == null) {
-            val cocktailsListFragment = CocktailsListFragment.newInstance()
-            show(cocktailsListFragment, add = true)
+            viewModel.navigate(NavigationStrategy.Add(CocktailsListFragment.newInstance()))
         }
-    }
 
-    override fun show(fragment: Fragment, add: Boolean) {
-
-        viewModel.viewModelScope.launch {
-
+        viewModel.observeNavigationStrategy(this) {
+            when (it) {
+                is NavigationStrategy.Replace -> it.startTransaction(
+                    supportFragmentManager,
+                    R.id.container
+                )
+                is NavigationStrategy.Add -> it.startTransaction(
+                    supportFragmentManager,
+                    R.id.container
+                )
+            }
         }
-        if (add)
-            supportFragmentManager.beginTransaction().add(R.id.container, fragment).commit()
-        else
-            supportFragmentManager.beginTransaction()
-                .addToBackStack(fragment.javaClass.canonicalName).replace(R.id.container, fragment)
-                .commit()
+
     }
 }

@@ -1,17 +1,12 @@
 package com.melyseev.cocktails2023.di.modules
 
-
 import com.melyseev.cocktails2023.common.Communications
-import com.melyseev.cocktails2023.data.CocktailsRepositoryImpl
-import com.melyseev.cocktails2023.data.HandleErrorToDomainException
-import com.melyseev.cocktails2023.data.SelectCategorySubcategoryRepositoryImpl
 import com.melyseev.cocktails2023.di.ApplicationScope
-import com.melyseev.cocktails2023.domain.HandleDomainExceptionToString
-import com.melyseev.cocktails2023.domain.SelectCategorySubcategoryRepository
-import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
-import com.melyseev.cocktails2023.domain.main.CocktailsRepository
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.communication.NavigationStrategyState
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailCommunications
-import com.melyseev.cocktails2023.presentation.main.DispatchersList
+import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailStateCommunication
+import com.melyseev.cocktails2023.presentation.details_cocktail.communications.LikeStateCommunication
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
 import com.melyseev.cocktails2023.presentation.main.communications.SubcategoriesCommunications
 import com.melyseev.cocktails2023.presentation.select_category.communications.SelectCategoryCommunications
@@ -19,10 +14,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface ViewModelDependencies {
-
-    @Binds
-    fun provideDispatchersList(param: DispatchersList.Base): DispatchersList
+interface CommunicationsModule {
 
     @Binds
     fun provideSubcategoriesCommunications(param: SubcategoriesCommunications.Base): SubcategoriesCommunications
@@ -42,9 +34,6 @@ interface ViewModelDependencies {
     @Binds
     fun provideStateListSubcategoryCommunication(param: Communications.SubcategoryListStateCommunication.Base): Communications.SubcategoryListStateCommunication
 
-    //@Binds
-    //fun provideStateSubcategorySelectedListStateCommunication(param: Communications.SubcategorySelectedListStateCommunication.Base): Communications.SubcategorySelectedListStateCommunication
-
     @Binds
     fun provideStateListCocktailCommunication(param: Communications.CocktailListStateCommunication.Base): Communications.CocktailListStateCommunication
 
@@ -55,32 +44,16 @@ interface ViewModelDependencies {
     fun provideStateSelectedCategoryCommunication(param: Communications.SelectedCategoryCommunication.Base): Communications.SelectedCategoryCommunication
 
     @Binds
-    fun provideStateDetailsCocktailStateCommunication(param: Communications.DetailsCocktailStateCommunication.Base): Communications.DetailsCocktailStateCommunication
+    fun provideStateDetailsCocktailStateCommunication(param: DetailsCocktailStateCommunication.Base): DetailsCocktailStateCommunication
 
     @Binds
-    fun provideStateLikeStateCommunictaion(param: Communications.LikeStateCommunictaion.Base): Communications.LikeStateCommunictaion
-
-
+    fun provideStateLikeStateCommunication(param: LikeStateCommunication.Base): LikeStateCommunication
 
     @ApplicationScope
     @Binds
-    fun provideInteractor(param: CocktailsInteractor.Base): CocktailsInteractor
-
-
-    @ApplicationScope
-    @Binds
-    fun provideRepository(param: CocktailsRepositoryImpl): CocktailsRepository
+    fun provideNavigationCommunication(param: NavigationCommunication.Base): NavigationCommunication
 
     @ApplicationScope
     @Binds
-    fun provideRepositorySelect(param: SelectCategorySubcategoryRepositoryImpl): SelectCategorySubcategoryRepository
-
-    @ApplicationScope
-    @Binds
-    fun provideHandleErrorToDomainException(param: HandleErrorToDomainException.Base): HandleErrorToDomainException
-
-    @ApplicationScope
-    @Binds
-    fun provideHandleDomainExceptionToString(param: HandleDomainExceptionToString.Base): HandleDomainExceptionToString
-
+    fun provideStateNavigationStrategyStateCommunication(param: NavigationStrategyState.Base): NavigationStrategyState
 }

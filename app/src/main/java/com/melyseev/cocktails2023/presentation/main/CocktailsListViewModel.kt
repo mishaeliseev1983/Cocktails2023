@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.melyseev.cocktails2023.common.Communications
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.short_cocktail.CocktailShortDomain
 import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
@@ -16,6 +17,8 @@ import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResul
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,9 +26,10 @@ import javax.inject.Inject
 class CocktailsListViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
     private val communications: CocktailsCommunications,
+    private val navigationCommunication: NavigationCommunication,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
-    ObserveCocktails, FetchList {
+    ObserveCocktails, FetchList, Communications.Change<Unit, NavigationStrategy> {
 
     fun fetchData() {
         viewModelScope.launch(dispatchersList.io()) {
@@ -122,6 +126,10 @@ class CocktailsListViewModel @Inject constructor(
     fun selectSubcategoryCocktails(subcategory: String) {
         interactor.changeSubcategory(subcategory)
         fetchData()
+    }
+
+    override fun change(source: NavigationStrategy) {
+        navigationCommunication.change(navigationStrategy = source)
     }
 
 
