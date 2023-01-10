@@ -2,6 +2,7 @@ package com.melyseev.cocktails2023.di
 
 import android.content.Context
 import com.melyseev.cocktails2023.di.modules.*
+import com.melyseev.cocktails2023.presentation.activity.MainActivity
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailFragment
 import com.melyseev.cocktails2023.presentation.main.CocktailsListFragment
 import com.melyseev.cocktails2023.presentation.select_category.SelectCategoryFragment
@@ -17,6 +18,7 @@ import dagger.Component
 )
 interface ApplicationComponent {
 
+    fun inject(activity: MainActivity)
     fun inject(fragment: CocktailsListFragment)
     fun inject(fragment: SelectCategoryFragment)
     fun inject(fragment: SelectSubcategoryFragment)

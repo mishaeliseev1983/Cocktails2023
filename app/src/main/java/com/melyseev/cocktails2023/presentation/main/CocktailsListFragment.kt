@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melyseev.cocktails2023.databinding.FragmentCocktailsListBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.ShowFragment
+import com.melyseev.cocktails2023.presentation.activity.ShowFragment
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailFragment

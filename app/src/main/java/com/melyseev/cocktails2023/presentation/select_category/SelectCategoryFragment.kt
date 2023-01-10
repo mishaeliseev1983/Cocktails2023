@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.melyseev.cocktails2023.databinding.FragmentSelectCategoryBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.ShowFragment
+import com.melyseev.cocktails2023.presentation.activity.ShowFragment
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
 import com.melyseev.cocktails2023.presentation.select_subcategory.SelectSubcategoryFragment
 import javax.inject.Inject

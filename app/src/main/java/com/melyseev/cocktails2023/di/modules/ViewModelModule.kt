@@ -2,6 +2,7 @@ package com.melyseev.cocktails2023.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.melyseev.cocktails2023.di.ViewModelKey
+import com.melyseev.cocktails2023.presentation.activity.MainViewModel
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailViewModel
 import com.melyseev.cocktails2023.presentation.main.CocktailsListViewModel
 import com.melyseev.cocktails2023.presentation.select_category.SelectCategoryViewModel
@@ -34,4 +35,11 @@ interface ViewModelModule {
     @ViewModelKey(DetailsCocktailViewModel::class)
     @Binds
     fun bindDetailsCocktailViewModel(impl: DetailsCocktailViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    @Binds
+    fun bindMainViewModel(impl: MainViewModel): ViewModel
+
+
 }

@@ -1,4 +1,4 @@
-package com.melyseev.cocktails2023.presentation
+package com.melyseev.cocktails2023.presentation.activity
 
 import androidx.fragment.app.Fragment
 
