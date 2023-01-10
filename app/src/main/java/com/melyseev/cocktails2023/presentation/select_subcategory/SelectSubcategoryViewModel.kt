@@ -44,13 +44,15 @@ class SelectSubcategoryViewModel @Inject constructor(
                     message: String
                 ): SubcategoryResultUI =
                     if (message.isEmpty()) {
-                        val listSubcategoryUI = listSubcategoryDomain.map {
-                            SubcategoryUI(
-                                title = it.title,
-                                isSelected = it.isSelected
-                            )
-                        }
-                        SubcategoryResultUI.Success(listSubcategoryUI)
+                        if (listSubcategoryDomain.isEmpty())
+                            SubcategoryResultUI.Success(listOf(SubcategoryUI("", false)))
+                        else
+                            SubcategoryResultUI.Success(listSubcategoryDomain.map {
+                                SubcategoryUI(
+                                    title = it.title,
+                                    isSelected = it.isSelected
+                                )
+                            })
                     } else {
                         SubcategoryResultUI.Failure(message = message)
                     }

@@ -1,5 +1,6 @@
 package com.melyseev.cocktails2023.presentation.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,15 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.databinding.FragmentCocktailsListBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
-import com.melyseev.cocktails2023.presentation.main.list_cocktails.recyclerview.CocktailsListAdapter
-import com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview.SubcategoryListAdapter
+import com.melyseev.cocktails2023.presentation.ShowFragment
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
 import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailFragment
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.recyclerview.CocktailsListAdapter
+import com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview.SubcategoryListAdapter
 import com.melyseev.cocktails2023.presentation.main.list_subcategories.recyclerview.SubcategoryUIClick
 import com.melyseev.cocktails2023.presentation.select_category.SelectCategoryFragment
 import javax.inject.Inject
@@ -25,6 +26,7 @@ class CocktailsListFragment : Fragment() {
     private var _binding: FragmentCocktailsListBinding? = null
     private val binding: FragmentCocktailsListBinding
         get() = _binding ?: throw RuntimeException("Object FragmentCocktailsListBinding is null")
+    var showFragment: ShowFragment? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModuleFactory
@@ -37,6 +39,15 @@ class CocktailsListFragment : Fragment() {
         (requireActivity().application as App).component
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        showFragment = context as ShowFragment
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        showFragment = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,13 +62,11 @@ class CocktailsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        daggerApplicationComponent.inject( this )
+        daggerApplicationComponent.inject(this)
 
         binding.imageButton.setOnClickListener {
-            val fragment =  SelectCategoryFragment.newInstance()
-            requireActivity().supportFragmentManager.beginTransaction().
-                addToBackStack("").
-                replace(R.id.container, fragment).commit()
+            val fragment = SelectCategoryFragment.newInstance()
+            showFragment?.show(fragment, add = false)
         }
 
         val subcategoryUIClick = object : SubcategoryUIClick {
@@ -71,12 +80,9 @@ class CocktailsListFragment : Fragment() {
         binding.recyclerViewSubcategory.adapter = subcategoryListAdapter
 
 
-
-        val cocktailListAdapter = CocktailsListAdapter{
-            val fragment =  DetailsCocktailFragment.newInstance(it)
-            requireActivity().supportFragmentManager.beginTransaction().
-            addToBackStack("").
-            replace(R.id.container, fragment).commit()
+        val cocktailListAdapter = CocktailsListAdapter {
+            val fragment = DetailsCocktailFragment.newInstance(it)
+            showFragment?.show(fragment, add = false)
         }
         binding.recyclerViewCocktails.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -90,12 +96,12 @@ class CocktailsListFragment : Fragment() {
         viewModel.observeStateSubcategoryList(this) {
             when (it) {
                 is SubcategoryResultUI.Success -> {
-                    subcategoryListAdapter.change( it.list )
-                    if(!movedScrollPositionSubcategory) {
-                       val index = it.list.indexOfFirst { it.isSelected }
-                       if(index!=-1)
-                           binding.recyclerViewSubcategory.smoothScrollToPosition(index)
-                       movedScrollPositionSubcategory=true
+                    subcategoryListAdapter.change(it.list)
+                    if (!movedScrollPositionSubcategory) {
+                        val index = it.list.indexOfFirst { it.isSelected }
+                        if (index != -1)
+                            binding.recyclerViewSubcategory.smoothScrollToPosition(index)
+                        movedScrollPositionSubcategory = true
                     }
                 }
                 is SubcategoryResultUI.Failure -> {
@@ -107,7 +113,7 @@ class CocktailsListFragment : Fragment() {
         viewModel.observeStateCocktailList(this) {
             when (it) {
                 is CocktailResultUI.Success -> {
-                    cocktailListAdapter.change( it.list )
+                    cocktailListAdapter.change(it.list)
                 }
                 is CocktailResultUI.Failure -> {
                     binding.tvCategory.text = it.message
@@ -115,14 +121,13 @@ class CocktailsListFragment : Fragment() {
             }
         }
 
-        viewModel.observeStateCategoryName(this){
+        viewModel.observeStateCategoryName(this) {
             binding.tvCategory.text = it
         }
 
         viewModel.fetchCategoryName()
         viewModel.fetchData()
     }
-
 
 
     override fun onDestroy() {

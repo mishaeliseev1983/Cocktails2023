@@ -16,6 +16,7 @@ import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResul
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUI
 import com.melyseev.cocktails2023.presentation.SubcategoryResultUI
 import com.melyseev.cocktails2023.presentation.SubcategoryUI
+import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailUIEmpty
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -78,9 +79,12 @@ class CocktailsListViewModel @Inject constructor(
                 message: String
             ): CocktailResultUI =
                 if (message.isEmpty()) {
-                    CocktailResultUI.Success(list = cocktailDomainDomain.map {
-                        CocktailUI(it.id, it.title, it.urlImage)
-                    })
+                    if (cocktailDomainDomain.isEmpty())
+                        CocktailResultUI.Success(list = listOf(CocktailUIEmpty))
+                    else
+                        CocktailResultUI.Success(list = cocktailDomainDomain.map {
+                            CocktailUI(it.id, it.title, it.urlImage)
+                        })
                 } else
                     CocktailResultUI.Failure(message = message)
         })
