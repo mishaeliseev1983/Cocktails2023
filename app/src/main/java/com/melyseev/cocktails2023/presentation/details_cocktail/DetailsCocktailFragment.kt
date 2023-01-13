@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.melyseev.cocktails2023.R
 import com.melyseev.cocktails2023.databinding.FragmentDetailsCocktailBinding
 import com.melyseev.cocktails2023.presentation.App
-import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
+import com.melyseev.cocktails2023.presentation.details_cocktail.recyclerview.IngredientsListAdapter
+import com.melyseev.cocktails2023.presentation.details_cocktail.ui_objects.DetailsCocktailResultUI
 import com.melyseev.cocktails2023.presentation.main.ViewModuleFactory
 import javax.inject.Inject
 
@@ -59,13 +61,19 @@ class DetailsCocktailFragment : Fragment() {
 
         daggerApplicationComponent.inject(this)
 
+        val ingredientsListAdapter = IngredientsListAdapter()
+
+        binding.rvIngredients.adapter = ingredientsListAdapter
+        binding.rvIngredients.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+
         viewModel.observeProgress(this) {
             binding.progress.visibility = it
         }
 
         viewModel.observeStateDetailsCocktail(this) {
             when (it) {
-
                 is DetailsCocktailResultUI.Success -> {
                     binding.tvCocktailTitle.text = it.title
                     binding.tvCocktailIntsructions.text = it.instructions
@@ -76,6 +84,8 @@ class DetailsCocktailFragment : Fragment() {
                         .load(it.image)
                         .centerCrop()
                         .into(binding.imageView)
+
+                    ingredientsListAdapter.change(it.ingredients)
                 }
                 is DetailsCocktailResultUI.Error -> {
                     binding.tvCocktailTitle.text = it.message
@@ -106,10 +116,6 @@ class DetailsCocktailFragment : Fragment() {
             idCocktail?.let {
                 viewModel.updateCocktailFavoriteState(it, cocktailTitle, cocktailImageUrl)
             }
-        }
-
-        binding.btnBackToCocktails.setOnClickListener {
-            viewModel.navigate(NavigationStrategy.Back)
         }
 
     }

@@ -3,8 +3,10 @@ package com.melyseev.cocktails2023.domain.details_cocktail
 class DetailsCocktailDomain(
     val title: String,
     val image: String,
+    val instructions: String,
     val ingredients: List<String>,
-    val instructions: String
+    val measures: List<String>,
+
 ) {
     fun <T> mapToUI(mapper: Mapper<T>) = mapper.map(title, image, instructions)
 
@@ -14,7 +16,7 @@ class DetailsCocktailDomain(
 
     companion object{
         fun Empty(): DetailsCocktailDomain {
-            return DetailsCocktailDomain("","", emptyList(), "")
+            return DetailsCocktailDomain("","", "", emptyList(), emptyList())
         }
     }
 }

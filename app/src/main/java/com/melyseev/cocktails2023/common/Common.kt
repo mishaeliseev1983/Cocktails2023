@@ -1,5 +1,7 @@
 package com.melyseev.cocktails2023.common
 
+const val BASE_URL = "https://thecocktaildb.com/api/json/v1/1/"
+
 const val BEGIN_G ="g"
 const val BEGIN_A ="a"
 const val BEGIN_I ="i"

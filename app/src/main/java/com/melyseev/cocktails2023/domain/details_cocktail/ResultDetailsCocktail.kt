@@ -17,6 +17,6 @@ sealed class ResultDetailsCocktail {
         override fun <T> map(mapper: Mapper<T>): T {
             return mapper.mapToUI(detailsCocktailDomain = DetailsCocktailDomain.Empty(), message)
         }
-
     }
+
 }

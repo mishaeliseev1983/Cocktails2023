@@ -18,4 +18,6 @@
     <string name="cocktail_like">Check if like it</string>
     <string name="choose_like">"Choose other category. Select cocktail. Push heart."</string>
     <string name="no_subcategories">No subcategories</string>
+    <string name="no_connection">No internet connection</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

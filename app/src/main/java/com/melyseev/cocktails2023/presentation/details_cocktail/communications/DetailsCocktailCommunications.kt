@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.melyseev.cocktails2023.common.Communications
 import com.melyseev.cocktails2023.presentation.details_cocktail.CocktailFavoriteStateResultUI
-import com.melyseev.cocktails2023.presentation.details_cocktail.DetailsCocktailResultUI
+import com.melyseev.cocktails2023.presentation.details_cocktail.ui_objects.DetailsCocktailResultUI
 import javax.inject.Inject
 
 interface DetailsCocktailCommunications : ObserveDetailsCocktail {

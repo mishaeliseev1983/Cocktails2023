@@ -54,17 +54,17 @@ class CocktailsListViewModel @Inject constructor(
                     //if (interactor.getSubcategory().isEmpty() && listSubcategoryDomain.isEmpty()) {
                     //    listSubcategoryUI = listOf(SubcategoryUIEmpty)
                     //} else {
-                        if (interactor.getSubcategory()
-                                .isEmpty() && listSubcategoryDomain.isNotEmpty()
-                        ) {
-                            interactor.changeSubcategory(listSubcategoryDomain[0].title)
-                        }
-                        val listSubcategoryUI = listSubcategoryDomain.map {
-                            SubcategoryUI(
-                                title = it.title,
-                                isSelected = (it.title == interactor.getSubcategory())
-                            )
-                        }
+                    if (interactor.getSubcategory()
+                            .isEmpty() && listSubcategoryDomain.isNotEmpty()
+                    ) {
+                        interactor.changeSubcategory(listSubcategoryDomain[0].title)
+                    }
+                    val listSubcategoryUI = listSubcategoryDomain.map {
+                        SubcategoryUI(
+                            title = it.title,
+                            isSelected = (it.title == interactor.getSubcategory())
+                        )
+                    }
 
 
                     SubcategoryResultUI.Success(listSubcategoryUI)

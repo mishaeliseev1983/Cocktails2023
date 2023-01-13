@@ -47,26 +47,27 @@
             app:layout_constraintBottom_toTopOf="@id/tv_cocktail_intsructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             tools:text="@string/title_cocktail" />
 
         <TextView
             android:id="@+id/tv_cocktail_intsructions"
             app:layout_constraintTop_toBottomOf="@id/tv_cocktail_title"
+            app:layout_constraintBottom_toTopOf="@id/rv_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             tools:text="@string/instructions" />
 
-
-        <Button
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ingredients"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tv_cocktail_intsructions"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/btn_back_to_cocktails"
-            android:text="@string/back_cocktails"
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" >
+        </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

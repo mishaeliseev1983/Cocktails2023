@@ -5,15 +5,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.details_cocktail.DetailsCocktailDomain
 import com.melyseev.cocktails2023.domain.details_cocktail.ResultCocktailFavoriteState
 import com.melyseev.cocktails2023.domain.details_cocktail.ResultDetailsCocktail
-import com.melyseev.cocktails2023.presentation.activity.FetchNavigation
-import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
-import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
+import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.DetailsCocktailCommunications
 import com.melyseev.cocktails2023.presentation.details_cocktail.communications.ObserveDetailsCocktail
+import com.melyseev.cocktails2023.presentation.details_cocktail.ui_objects.DetailsCocktailResultUI
+import com.melyseev.cocktails2023.presentation.details_cocktail.ui_objects.IngredientCocktailUI
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,10 +20,9 @@ import javax.inject.Inject
 class DetailsCocktailViewModel @Inject constructor(
     private val dispatchersList: DispatchersList,
     private val communications: DetailsCocktailCommunications,
-    private val navigationCommunication: NavigationCommunication,
     private val interactor: CocktailsInteractor
 ) : ViewModel(),
-    ObserveDetailsCocktail, FetchDetailsCocktail, FetchNavigation {
+    ObserveDetailsCocktail, FetchDetailsCocktail {
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
         communications.observeProgress(owner, observer)
     }
@@ -49,14 +47,15 @@ class DetailsCocktailViewModel @Inject constructor(
 
             //set like
             val result = interactor.getCocktailFavoriteState(cocktailId = cocktailId)
-            val resulUI = result.map(object : ResultCocktailFavoriteState.Mapper<CocktailFavoriteStateResultUI>{
+            val resulUI = result.map(object :
+                ResultCocktailFavoriteState.Mapper<CocktailFavoriteStateResultUI> {
                 override fun mapToUI(
                     isFavorite: Boolean,
                     message: String
                 ): CocktailFavoriteStateResultUI {
-                    return  if(message.isEmpty()){
+                    return if (message.isEmpty()) {
                         CocktailFavoriteStateResultUI.Success(isFavorite = isFavorite)
-                    }else{
+                    } else {
                         CocktailFavoriteStateResultUI.Error(message = message)
                     }
                 }
@@ -65,14 +64,36 @@ class DetailsCocktailViewModel @Inject constructor(
 
             //set image, title, instructions
             val resultDetailsCocktail = interactor.getDetailsCocktailById(cocktailId)
-            val resultDetailsCocktailUI = resultDetailsCocktail.map(object : ResultDetailsCocktail.Mapper<DetailsCocktailResultUI> {
+            val resultDetailsCocktailUI = resultDetailsCocktail.map(object :
+                ResultDetailsCocktail.Mapper<DetailsCocktailResultUI> {
                 override fun mapToUI(
                     detailsCocktailDomain: DetailsCocktailDomain,
                     message: String
                 ): DetailsCocktailResultUI {
-                    return  if(message.isEmpty()){
-                        DetailsCocktailResultUI.Success(detailsCocktailDomain.title, detailsCocktailDomain.image, detailsCocktailDomain.instructions)
-                    }else{
+                    return if (message.isEmpty()) {
+
+                        val listIngredientCocktailUI = mutableListOf<IngredientCocktailUI>()
+
+                        detailsCocktailDomain.ingredients.forEachIndexed { index, element ->
+
+                            if (detailsCocktailDomain.measures[index].isNotEmpty()
+                                && element.isNotEmpty()
+                            )
+                                listIngredientCocktailUI.add(
+                                    IngredientCocktailUI(
+                                        element,
+                                        detailsCocktailDomain.measures[index]
+                                    )
+                                )
+                        }
+
+                        DetailsCocktailResultUI.Success(
+                            title = detailsCocktailDomain.title,
+                            image = detailsCocktailDomain.image,
+                            instructions = detailsCocktailDomain.instructions,
+                            ingredients = listIngredientCocktailUI
+                        )
+                    } else {
                         DetailsCocktailResultUI.Error(message = message)
                     }
                 }
@@ -83,19 +104,28 @@ class DetailsCocktailViewModel @Inject constructor(
     }
 
 
-    fun updateCocktailFavoriteState(cocktailId: Int, cocktailTitle: String, cocktailImageUrl: String){
+    fun updateCocktailFavoriteState(
+        cocktailId: Int,
+        cocktailTitle: String,
+        cocktailImageUrl: String
+    ) {
         viewModelScope.launch(dispatchersList.io()) {
             communications.showProgress(View.VISIBLE)
 
-            val result = interactor.getUpdatedCocktailFavoriteState(cocktailId, cocktailTitle, cocktailImageUrl)
-            val resulUI = result.map(object : ResultCocktailFavoriteState.Mapper<CocktailFavoriteStateResultUI>{
+            val result = interactor.getUpdatedCocktailFavoriteState(
+                cocktailId,
+                cocktailTitle,
+                cocktailImageUrl
+            )
+            val resulUI = result.map(object :
+                ResultCocktailFavoriteState.Mapper<CocktailFavoriteStateResultUI> {
                 override fun mapToUI(
                     isFavorite: Boolean,
                     message: String
                 ): CocktailFavoriteStateResultUI {
-                    return  if(message.isEmpty()){
+                    return if (message.isEmpty()) {
                         CocktailFavoriteStateResultUI.Success(isFavorite = isFavorite)
-                    }else{
+                    } else {
                         CocktailFavoriteStateResultUI.Error(message = message)
                     }
                 }
@@ -104,10 +134,6 @@ class DetailsCocktailViewModel @Inject constructor(
             communications.showLike(resulUI)
             communications.showProgress(View.GONE)
         }
-    }
-
-    override fun navigate(navigationStrategy: NavigationStrategy) {
-        navigationCommunication.change(NavigationStrategy.Back)
     }
 
 }

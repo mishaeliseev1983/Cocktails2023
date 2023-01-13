@@ -19,21 +19,60 @@ class MappersModules {
 
     @Provides
     fun provideMapDetailsCocktailDtoToDetailsCocktailDomain(): DetailsCocktailDto.Mapper<DetailsCocktailDomain> {
-        return object : DetailsCocktailDto.Mapper<DetailsCocktailDomain>{
-        override fun map(drinks: List<com.melyseev.cocktails2023.data.details_cocktail.Drink>): DetailsCocktailDomain {
-            val drink = drinks[0]
-            return DetailsCocktailDomain(
-                title = drink.strDrink ?: "",
-                image = drink.strDrinkThumb?:"",
-                ingredients = emptyList(),
-                instructions = drink.strInstructions ?: ""
-            )
+        return object : DetailsCocktailDto.Mapper<DetailsCocktailDomain> {
+
+            override fun map(drinks: List<com.melyseev.cocktails2023.data.details_cocktail.Drink>): DetailsCocktailDomain {
+                val drink = drinks[0]
+
+                val ingredients = listOf(
+                    drink.strIngredient1 ?: "",
+                    drink.strIngredient2 ?: "",
+                    drink.strIngredient3 ?: "",
+                    drink.strIngredient4 ?: "",
+                    drink.strIngredient5 ?: "",
+                    drink.strIngredient6 ?: "",
+                    drink.strIngredient7 ?: "",
+                    drink.strIngredient8 ?: "",
+                    drink.strIngredient9 ?: "",
+                    drink.strIngredient10 ?: "",
+                    drink.strIngredient11 ?: "",
+                    drink.strIngredient12 ?: "",
+                    drink.strIngredient13 ?: "",
+                    drink.strIngredient14 ?: "",
+                    drink.strIngredient15 ?: ""
+                )
+
+                val measures = listOf(
+                    drink.strMeasure1 ?: "",
+                    drink.strMeasure2 ?: "",
+                    drink.strMeasure3 ?: "",
+                    drink.strMeasure4 ?: "",
+                    drink.strMeasure5 ?: "",
+                    drink.strMeasure6 ?: "",
+                    drink.strMeasure7 ?: "",
+                    drink.strMeasure8 ?: "",
+                    drink.strMeasure9 ?: "",
+                    drink.strMeasure10 ?: "",
+                    drink.strMeasure11 ?: "",
+                    drink.strMeasure12 ?: "",
+                    drink.strMeasure13 ?: "",
+                    drink.strMeasure14 ?: "",
+                    drink.strMeasure15 ?: ""
+                )
+
+                return DetailsCocktailDomain(
+                    title = drink.strDrink ?: "",
+                    image = drink.strDrinkThumb ?: "",
+                    instructions = drink.strInstructions ?: "",
+                    ingredients = ingredients,
+                    measures = measures
+                )
+            }
         }
-     }
     }
 
     @Provides
-    fun provideMapCocktailShortDtoToDomain(): ShortDto.Mapper<List<CocktailShortDomain> > {
+    fun provideMapCocktailShortDtoToDomain(): ShortDto.Mapper<List<CocktailShortDomain>> {
         return object : ShortDto.Mapper<List<CocktailShortDomain>> {
             override fun mapToDomain(drinks: List<Drink>): List<CocktailShortDomain> {
                 return drinks.map {
@@ -49,13 +88,13 @@ class MappersModules {
 
     @Provides
     fun provideMapSubcategoryEntityToSubcategoryData() =
-        object : SubcategoryEntity.Mapper<SubcategoryData>{
+        object : SubcategoryEntity.Mapper<SubcategoryData> {
             override fun map(
                 idCategory: Int,
                 subcategoryName: String,
                 subcategoryChecked: Int
             ): SubcategoryData {
-                return SubcategoryData(name = subcategoryName, checked = subcategoryChecked==1)
+                return SubcategoryData(name = subcategoryName, checked = subcategoryChecked == 1)
             }
         }
 
@@ -80,7 +119,7 @@ class MappersModules {
 
 
     @Provides
-    fun provideMapFavoriteEntityToFavoriteStateCocktailDomain(): FavoriteEntity.Mapper<FavoriteStateCocktailDomain>{
+    fun provideMapFavoriteEntityToFavoriteStateCocktailDomain(): FavoriteEntity.Mapper<FavoriteStateCocktailDomain> {
         return object : FavoriteEntity.Mapper<FavoriteStateCocktailDomain> {
 
             /* override fun map(cocktailId: Int, like: Int): FavoriteStateCocktailDomain {
@@ -100,7 +139,7 @@ class MappersModules {
     }
 
     @Provides
-    fun provideMapFavoriteEntityToCocktailShortDomain(): FavoriteEntity.Mapper<CocktailShortDomain>{
+    fun provideMapFavoriteEntityToCocktailShortDomain(): FavoriteEntity.Mapper<CocktailShortDomain> {
         return object : FavoriteEntity.Mapper<CocktailShortDomain> {
             override fun map(
                 cocktailId: Int,
@@ -108,12 +147,10 @@ class MappersModules {
                 cocktailImage: String,
                 like: Int
             ): CocktailShortDomain {
-                return CocktailShortDomain(cocktailId,cocktailTitle, cocktailImage)
+                return CocktailShortDomain(cocktailId, cocktailTitle, cocktailImage)
             }
         }
     }
-
-
 
 
 /*
