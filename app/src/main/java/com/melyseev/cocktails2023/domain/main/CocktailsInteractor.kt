@@ -45,7 +45,7 @@ interface CocktailsInteractor {
 
         override suspend fun fetchListSubcategory(category: String): ResultSubcategory {
             return try {
-                val list = repository.fetchListSubcategories(category)
+                val list = repository.getListSubcategories(category)
                 ResultSubcategory.Success(list)
             } catch (e: DomainException) {
                 ResultSubcategory.Error(handleDomainExceptionToString.handleError(e))
@@ -54,7 +54,7 @@ interface CocktailsInteractor {
 
         override suspend fun fetchListSubcategorySelected(category: String): ResultSubcategory {
             return try {
-                val list = repository.fetchListSubcategories(category)
+                val list = repository.getListSubcategories(category)
                 ResultSubcategory.Success(list.filter { it.isSelected })
             } catch (e: DomainException) {
                 ResultSubcategory.Error(handleDomainExceptionToString.handleError(e))
@@ -67,7 +67,7 @@ interface CocktailsInteractor {
             subcategory: String
         ): ResultCocktail {
             return try {
-                val list = repository.fetchListCocktails(category, subcategory)
+                val list = repository.getListCocktails(category, subcategory)
                 ResultCocktail.Success(list)
             } catch (e: DomainException) {
                 ResultCocktail.Error(handleDomainExceptionToString.handleError(e))

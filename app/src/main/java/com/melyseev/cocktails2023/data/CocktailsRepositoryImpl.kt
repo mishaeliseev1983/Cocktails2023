@@ -30,7 +30,7 @@ class CocktailsRepositoryImpl @Inject constructor(
 ) :
     CocktailsRepository {
 
-    override suspend fun fetchListSubcategories(category: String): List<SubcategoryDomain> {
+    override suspend fun getListSubcategories(category: String): List<SubcategoryDomain> {
         if (category == CATEGORY_BY_FAVORITE) return emptyList()
         try {
 
@@ -93,7 +93,7 @@ class CocktailsRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun fetchListCocktails(
+    override suspend fun getListCocktails(
         category: String,
         subcategory: String
     ): List<CocktailShortDomain> {

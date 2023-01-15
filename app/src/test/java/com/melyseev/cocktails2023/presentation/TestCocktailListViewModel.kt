@@ -14,6 +14,7 @@ import org.junit.Test
 class TestCocktailListViewModel {
 
     lateinit var communications: BaseTestCocktailsListViewModel.TestSubcategoryCommunications
+    lateinit var navigationCommunications: BaseTestCocktailsListViewModel.TestNavigationCommunications
     lateinit var interactor: BaseTestCocktailsListViewModel.TestCocktailsInteractor
     lateinit var viewModel: CocktailsListViewModel
     lateinit var dispatchersList: DispatchersList
@@ -21,10 +22,11 @@ class TestCocktailListViewModel {
     @Before
     fun setUp() {
         communications = BaseTestCocktailsListViewModel.TestSubcategoryCommunications()
+        navigationCommunications = BaseTestCocktailsListViewModel.TestNavigationCommunications()
         interactor = BaseTestCocktailsListViewModel.TestCocktailsInteractor()
         dispatchersList = BaseTestCocktailsListViewModel.TestDisptachersList()
 
-        viewModel = CocktailsListViewModel(dispatchersList, communications, interactor)
+        viewModel = CocktailsListViewModel(dispatchersList, communications, navigationCommunications, interactor)
     }
 
 

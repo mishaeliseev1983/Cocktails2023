@@ -10,7 +10,7 @@ interface HandleDomainExceptionToString {
     class Base @Inject constructor(private val manageResources: ManageResources): HandleDomainExceptionToString{
         override fun handleError(exception: Exception): String {
            return when(exception){
-                DomainException.NoInternetException -> manageResources.string(R.string.no_connection)
+                DomainException.NoInternetConnectionException -> manageResources.string(R.string.no_connection)
                 else -> manageResources.string(R.string.unknown_error)
             }
         }

@@ -9,7 +9,7 @@ interface HandleErrorToDomainException {
     class Base @Inject constructor(): HandleErrorToDomainException {
         override fun handle(exception: Exception): DomainException {
             return when (exception) {
-                is UnknownHostException -> DomainException.NoInternetException
+                is UnknownHostException -> DomainException.NoInternetConnectionException
                 else -> DomainException.UnknownErrorException
             }
         }

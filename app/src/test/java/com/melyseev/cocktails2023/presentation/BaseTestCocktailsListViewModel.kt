@@ -2,10 +2,14 @@ package com.melyseev.cocktails2023.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultCocktailFavoriteState
+import com.melyseev.cocktails2023.domain.details_cocktail.ResultDetailsCocktail
 import com.melyseev.cocktails2023.domain.main.CocktailsInteractor
 import com.melyseev.cocktails2023.domain.main.short_cocktail.ResultCocktail
 import com.melyseev.cocktails2023.domain.main.subcategories.ResultSubcategory
 import com.melyseev.cocktails2023.domain.main.subcategories.SubcategoryDomain
+import com.melyseev.cocktails2023.presentation.activity.NavigationCommunication
+import com.melyseev.cocktails2023.presentation.activity.NavigationStrategy
 import com.melyseev.cocktails2023.presentation.main.DispatchersList
 import com.melyseev.cocktails2023.presentation.main.communications.CocktailsCommunications
 import com.melyseev.cocktails2023.presentation.main.list_cocktails.CocktailResultUI
@@ -16,6 +20,19 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 
 abstract class BaseTestCocktailsListViewModel {
 
+    class TestNavigationCommunications:NavigationCommunication {
+        override fun change(navigationStrategy: NavigationStrategy) {
+            TODO("Not yet implemented")
+        }
+
+        override fun observeNavigationStrategy(
+            owner: LifecycleOwner,
+            observer: Observer<NavigationStrategy>
+        ) {
+            TODO("Not yet implemented")
+        }
+
+    }
 
     class TestSubcategoryCommunications: CocktailsCommunications {
 
@@ -74,10 +91,38 @@ abstract class BaseTestCocktailsListViewModel {
             return resultSubcategory
         }
 
+        override suspend fun fetchListSubcategorySelected(category: String): ResultSubcategory {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun fetchListCocktails(
             category: String,
             subcategory: String
         ): ResultCocktail {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun updateSelectSubcategory(
+            category: String,
+            subcategory: String,
+            isSelected: Boolean
+        ) {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getDetailsCocktailById(cocktailId: Int): ResultDetailsCocktail {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getUpdatedCocktailFavoriteState(
+            cocktailId: Int,
+            cocktailTitle: String,
+            cocktailImage: String
+        ): ResultCocktailFavoriteState {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getCocktailFavoriteState(cocktailId: Int): ResultCocktailFavoriteState {
             TODO("Not yet implemented")
         }
 

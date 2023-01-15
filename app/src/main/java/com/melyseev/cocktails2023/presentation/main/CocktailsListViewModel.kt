@@ -49,11 +49,7 @@ class CocktailsListViewModel @Inject constructor(
             ): SubcategoryResultUI =
                 if (message.isEmpty()) {
 
-
                     //no subcategory
-                    //if (interactor.getSubcategory().isEmpty() && listSubcategoryDomain.isEmpty()) {
-                    //    listSubcategoryUI = listOf(SubcategoryUIEmpty)
-                    //} else {
                     if (interactor.getSubcategory()
                             .isEmpty() && listSubcategoryDomain.isNotEmpty()
                     ) {
