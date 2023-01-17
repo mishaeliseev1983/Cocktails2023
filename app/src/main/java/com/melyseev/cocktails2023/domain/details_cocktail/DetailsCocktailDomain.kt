@@ -1,6 +1,6 @@
 package com.melyseev.cocktails2023.domain.details_cocktail
 
-class DetailsCocktailDomain(
+data class DetailsCocktailDomain(
     val title: String,
     val image: String,
     val instructions: String,
